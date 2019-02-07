@@ -7,10 +7,9 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link rel="shortcut icon" href="webroot\img\favicon.ico" type="image/x-icon">
-    <link rel="icon" href="webroot\img\favicon.ico" type="image/x-icon">  
     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    <?=$this->Html->meta('icon')?>
     <style>
         body{
             font-family: 'PT Serif', serif;
@@ -20,13 +19,63 @@
 <body>
     <nav>
         <div class="nav-wrapper" style="background-color:black; color:white;">
-            <ul class="left hide-on-med-and-down">
+            <div class="brand-logo center">
+                <?=$this->Html->image('afterstudy.png', array('height'=>'70px'));?>
+            </div>
+            <ul class="left">
                 <li><h5>AfterStudy</h5></li>
             </ul>
-            <img class="brand-logo center" height="120%" src="webroot\img\afterstudy.png"/>
+            <ul id="nav-mobile" class="right">
+                <?= $this->Html->Link('Register', ['action' => 'register']) ?>
+            </ul>
+            <ul id="nav-mobile" class="right">
+                <?= $this->Html->Link('Login', ['action' => 'login']) ?>       
+            </ul>
         </div>      
     </nav>
-<?php echo $this->fetch('content'); ?>
+
+    <script>
+        $(document).ready(function(){
+            $('.slider').slider();
+            $('.datepicker').datepicker();
+        });
+    </script>
+
+    <div class="row" style="margin-top:10px">
+        <div class="col s6">
+            <div class="slider">
+                <ul class="slides">
+                    <li>
+                        <?=$this->Html->image('projectshare.jpg', ['alt' => 'Projects']);?>
+                        <div class="caption center-align">
+                            <h3 class="deep-orange-text">Projects</h3>
+                            <h5 class="light white-text text-darken-3">Collaborate on Projects with others</h5>
+                        </div>
+                    </li>
+                    <li>
+                        <?=$this->Html->image('events.jpg', ['alt' => 'Events']);?>
+                        <div class="caption left-align">
+                            <h3>Events</h3>
+                            <h5 class="light grey-text text-lighten-3">Share Events and Socialize</h5>
+                        </div>
+                    </li>
+                    <li>
+                        <?=$this->Html->image('qa.jpg', ['alt' => 'QA']);?>
+                        <div class="caption right-align">
+                            <h3>QA Forum</h3>
+                            <h5 class="light grey-text text-lighten-3">Discuss Questions and Review Answers</h5>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+
+        <div class="col s6">
+            <?php echo $this->fetch('content'); ?>
+        </div>
+    </div>
+          
+
 
 <footer class="page-footer" style="width: 100%;left:0;bottom:0;
     background-color:black;color:white;">
