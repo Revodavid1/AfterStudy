@@ -1,9 +1,11 @@
+<div class="center">
+    <?= $this->Flash->render() ?>
+</div>
 <div class="row">
     <div class="col s12">
         <div class="card">
             <div class="card-content container">
                 <span class="card-title black-text center">Log in to AfterStudy</span>
-                <?= $this->Flash->render() ?>
                 <?= $this->Form->create() ?>
                 <div class="row">
                     <div class="input-field col s12">
