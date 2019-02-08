@@ -50,7 +50,8 @@
                                 <i class="material-icons prefix">email</i>
                             </div>
                             <div class="col s10">
-                                <?= $this->Form->control(('email'),['type' => 'email'],)?>
+                                <?= $this->Form->input('email',array('type' => 'text',
+                                    'label'=>'Email ID (ex: abc0001)'));?>
                             </div>
                         </div>
                         <div class="col s6 center">
@@ -104,9 +105,6 @@
                             <div class="col s10">
                                 <?= $this->Form->control(('zip_code'),['type' => 'text']);?>
                             </div>
-                        </div>
-                        <div>
-                            <?=$this->Form->hidden('verfication_status',array('value' => 'false'));?>
                         </div>
                     </div>
                     <div class="center">

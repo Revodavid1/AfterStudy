@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\RulesChecker;
 
 class UsersTable extends Table
 {
@@ -16,6 +17,12 @@ class UsersTable extends Table
         return $validator
             ->notEmpty('email', 'An email is required')
             ->notEmpty('password', 'A password is required')
+                ->add('password', [
+                    'length' => [
+                    'rule' => ['minLength', 2],
+                    'message' => 'Passwords must be at least 2 characters long.',
+                ]
+            ])
             ->notEmpty('fullname', 'A full name is required')
             ->notEmpty('phone', 'A phone number is required')
             ->notEmpty('zip_code', 'A zip code is required')
@@ -25,5 +32,10 @@ class UsersTable extends Table
             ->notEmpty('residential_status', 'A residential status is required')
             ->notEmpty('country_of_origin', 'A country of origin status is required')
             ->notEmpty('state_resident', 'A state of resident of origin status is required');
+    }
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email']),['message' => 'Email currently exists']);
+        return $rules;
     }
 }

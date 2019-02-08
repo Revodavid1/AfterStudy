@@ -75,6 +75,7 @@ class AppController extends Controller
             ],
              //use isAuthorized in Controllers
             'authorize' => ['Controller'],
+            'authError'    => 'Account not yet verified',
              // If unauthorized, return them to page they were just on
             'unauthorizedRedirect' => $this->referer()
         ]);

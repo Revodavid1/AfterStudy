@@ -27,6 +27,8 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user->verified = 'no';
+            $user->email = $user->email.'@wildcats.unh.edu';
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registration saved successfully.'));
                 return $this->redirect(['action' => 'register']);
@@ -62,11 +64,12 @@ class UsersController extends AppController
     public function isAuthorized($user)
 {
     // All registered users see dash
-    if ($this->request->getParam('action') === 'dash') {
+    if ($this->request->getParam('action') === 'dash' && ((isset($user['verified']) && $user['verified'] === 'yes'))) {
         return true;
     }
-
-
+    else{
+        return false;
+    }
     return parent::isAuthorized($user);
 }
     
