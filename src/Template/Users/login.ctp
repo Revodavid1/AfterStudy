@@ -23,7 +23,12 @@
                 </div> 
                 <?= $this->Form->end() ?>
                 <div class="row center">
-                    <?= $this->Html->link('No Account? Sign Up Here', ['action' => 'register']) ?>
+                    <div class="col s6">
+                        <?= $this->Html->link('No Account? Sign Up Here', ['action' => 'register']) ?>
+                    </div>
+                    <div class="col s6">
+                        <?= $this->Html->link('Forgot Password?', ['action' => 'register'], ['class' => 'red-text'])?>
+                    </div>
                 </div> 
             </div>
         </div>

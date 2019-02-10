@@ -37,9 +37,10 @@ class UsersController extends AppController
         }
         $this->set('user', $user);
     }
-    public function dash()
+    public function dashboard()
     {
-        $this->layout= 'home'; 
+        $this->layout = 'validuser';
+        $logged_in_user = $this->Auth->user('fullname'); 
     }
     public function initialize()
     {
@@ -64,7 +65,7 @@ class UsersController extends AppController
     public function isAuthorized($user)
 {
     // All registered users see dash
-    if ($this->request->getParam('action') === 'dash' && ((isset($user['verified']) && $user['verified'] === 'yes'))) {
+    if ($this->request->getParam('action') === 'dashboard' && ((isset($user['verified']) && $user['verified'] === 'yes'))) {
         return true;
     }
     else{

@@ -55,7 +55,7 @@ class AppController extends Controller
         $this->loadComponent('Auth', [
             'loginRedirect' => [
                 'controller' => 'Users',
-                'action' => 'dash'
+                'action' => 'dashboard'
             ],
             'logoutRedirect' => [
                 'controller' => 'Users',
@@ -75,7 +75,7 @@ class AppController extends Controller
             ],
              //use isAuthorized in Controllers
             'authorize' => ['Controller'],
-            'authError'    => 'Account not yet verified',
+            'authError'    => 'Uh-oh Access Denied',
              // If unauthorized, return them to page they were just on
             'unauthorizedRedirect' => $this->referer()
         ]);
