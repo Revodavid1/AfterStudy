@@ -82,6 +82,18 @@ class AppController extends Controller
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        $this->Auth->allow(['display', 'view', 'index']);
+        $this->Auth->allow(['view', 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        // All registered users see dash
+        if ($this->request->getParam('action') === 'dashboard' && ((isset($user['verified']) && $user['verified'] === 'yes'))) {
+            return true;
+        }
+        else{
+            return false;
+        }
+        return parent::isAuthorized($user);
     }
 }

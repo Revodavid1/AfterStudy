@@ -26,10 +26,10 @@
         }
     </style>
 </head>
-<body>
+<body class="blue-grey-text">
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper" style="background-color:black; color:white;z-index: 1000; ">
+            <div class="nav-wrapper blue-grey darken-2" style="color:white;z-index: 1000; ">
                 <ul class="left">
                     <li><h5>OffCampus</h5></li>
                 </ul>
@@ -48,7 +48,7 @@
                     <li>
                         <?= $this->Html->Link(
                             $this->Html->tag('i','exit_to_app', array('class'=>'material-icons')),
-                            array('action' => 'logout'),array('escape' => false)
+                            array('controller'=>'users','action' => 'logout'),array('escape' => false)
                         );?>
                     </li>
                 </ul>
@@ -59,6 +59,11 @@
     <script>
         $(document).ready(function(){
             $('.sidenav').sidenav();
+            $('.modal').modal({dismissible:false});
+            //$('.modal').modal();
+            $('#projectmodal').modal('open');
+            $('.tabs').tabs();
+            $('.datepicker').datepicker({format:'yyyy-mm-dd'});
         });
     </script>
     <div>
@@ -71,23 +76,23 @@
                     <?= $this->Html->Link(
                             'Projects',
                             array('controller'=>'projects','action' => 'index'),
-                            array('class'=>'black-text','escape' => false)
+                            array('class'=>'blue-grey-text','escape' => false)
 
                         );?>
                 </div>
             </li>
-            <li class="collection-item"><div><a href="#!" class="black-text">
+            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
                 <i class="material-icons">date_range</i> Events</a></div></li>
-            <li class="collection-item"><div><a href="#!" class="black-text">
+            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
                 <i class="material-icons">live_help</i> QA Forum</a></div></li>
-            <li class="collection-item"><div><a href="#!" class="black-text">
+            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
                 <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
         </ul>
         <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
     <main>
         <div>
-            <div class="col s12">
+            <div class="col s12" style="margin-left:3px">
                 <?php echo $this->fetch('content'); ?>
             </div>
         </div>

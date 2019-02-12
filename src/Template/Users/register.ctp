@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="center">
-                        <?= $this->Form->button(('Submit'),['class' => 'btn waves-effect black white-text 
+                        <?= $this->Form->button(('Submit'),['class' => 'btn waves-effect blue-grey darken-2 white-text 
                             waves-light'],['type' => 'submit'])?>
                     </div> 
                 <?= $this->Form->end() ?>

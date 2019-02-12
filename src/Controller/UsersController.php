@@ -61,18 +61,6 @@ class UsersController extends AppController
         // cause problems with normal functioning of AuthComponent.
         $this->Auth->allow(['register', 'logout']);
     }
-
-    public function isAuthorized($user)
-{
-    // All registered users see dash
-    if ($this->request->getParam('action') === 'dashboard' && ((isset($user['verified']) && $user['verified'] === 'yes'))) {
-        return true;
-    }
-    else{
-        return false;
-    }
-    return parent::isAuthorized($user);
-}
     
 }
 ?>

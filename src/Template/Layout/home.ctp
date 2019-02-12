@@ -17,9 +17,9 @@
         }
     </style>
 </head>
-<body>
+<body class="blue-grey-text">
     <nav>
-        <div class="nav-wrapper" style="background-color:black; color:white;">
+        <div class="nav-wrapper blue-grey darken-2" style="color:white;">
             <div class="brand-logo center">
                 <?=$this->Html->image('afterstudy.png', array('height'=>'70px'));?>
             </div>
