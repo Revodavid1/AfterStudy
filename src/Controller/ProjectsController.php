@@ -30,7 +30,8 @@ class ProjectsController extends AppController
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
-        $projects = $this->Paginator->paginate($this->Projects->find());
+        $projects = $this->Paginator->paginate($this->Projects->find('all',array(
+            'order' => array('projects.id' => 'desc')))->contain(['Users']));
         $this->set(compact('projects'));
     }
     public function initialize()

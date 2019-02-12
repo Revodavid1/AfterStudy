@@ -11,6 +11,7 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+        $this->hasMany('Projects');
     }
     public function validationDefault(Validator $validator)
     {

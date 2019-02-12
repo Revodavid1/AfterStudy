@@ -25,7 +25,9 @@
                                     <div class="col s6 valign-wrapper">
                                         <img src="webroot\img\port.jpg" height="2" alt="" 
                                             class=" circle responsive-img" style="width: 10%;">
-                                            <span style="margin-left:2px"> Name (Major)</span>
+                                            <span style="margin-left:2px;font-weight:bold" class="black-grey-text"> 
+                                                <?= $projects->user->fullname?>
+                                                (<?= $projects->user->major?>)</span>
                                     </div>
                                     <div class="col s6">
                                         <h6 class="brown-text "><?= $projects->short_title?>
@@ -79,15 +81,16 @@
                                                 <p>Supporting Link (external document, code,etc)</p>
                                             </div>
                                             <div class="col s12 m6 l6">
-                                                <p><?=  $this->Html->Link($projects->link); ?></p>
+                                                <p><?=  $this->Html->Link(__($projects->link),$projects->link,
+                                                    ['target' => '_blank']); ?></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="collaborators<?= $projects->id?>">
                                         <div class="row">
                                             <div class="col s12 m4 l4">
-                                                <p>I'm requesting <?= $projects->collaborators?> 
-                                                    collaborators</p>
+                                                <p>Requested <?= $projects->collaborators?> 
+                                                    collaborators, Interests:0, Accepted:0</p>
                                             </div>
                                             <div class="col s12 m4 l4">
                                                 <p>Skills Required:</p>
