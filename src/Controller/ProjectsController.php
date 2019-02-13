@@ -26,22 +26,53 @@ class ProjectsController extends AppController
         $this->set('project', $project);
 
     }
-    public function index()
+    
+    public function edit($slug)
+    {
+        $this->layout= 'validuser'; 
+        $project = $this->Projects->findBySlug($slug)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Projects->patchEntity($project, $this->request->getData());
+            if ($this->Projects->save($project)) {
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Unable to update your project.'));
+        }
+
+        $this->set('project', $project);
+    }
+    public function index() 
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
         $projects = $this->Paginator->paginate($this->Projects->find('all',array(
             'order' => array('projects.id' => 'desc')))->contain(['Users']));
         $this->set(compact('projects'));
+
+        $options = array(
+            'conditions' => array('projects.user_id' => $this->Auth->user('id')),
+            'order' => array('projects.id' => 'desc')
+        );
+        $this->loadComponent('Paginator');
+        $myprojects = $this->Paginator->paginate($this->Projects->find('all',$options));
+        $this->set(compact('myprojects'));
     }
+
     public function initialize()
     {
         parent::initialize();
 
         $this->loadComponent('Paginator');
-        $this->loadComponent('Flash'); // Include the FlashComponent
-        $this->Auth->allow(['add', 'index']);
+        $this->loadComponent('Flash');
+        
     }
-    
+    public function isAuthorized($user) {
+        if ($this->request->getParam('action') === 'index' || 
+            $this->request->getParam('action') === 'add' ||
+            $this->request->getParam('action') === 'edit'  ) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    }
 }
 ?>

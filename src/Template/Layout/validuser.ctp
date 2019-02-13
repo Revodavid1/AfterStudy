@@ -29,7 +29,7 @@
 <body class="blue-grey-text">
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper blue-grey darken-2" style="color:white;z-index: 1000; ">
+            <div class="nav-wrapper blue-grey darken-2 z-depth-3" style="color:white;">
                 <ul class="left">
                     <li><h5>OffCampus</h5></li>
                 </ul>
@@ -67,7 +67,7 @@
         });
     </script>
     <div>
-        <ul id="slide-out" class="sidenav sidenav-fixed collection" style="width:200px;margin-top: 60px;">
+        <ul id="slide-out" class="sidenav sidenav-fixed collection z-depth-2" style="width:200px;margin-top: 60px;">
             <li><div class="brand-logo center">
                 <?=$this->Html->image('afterstudy.png');?>
             </div></li>

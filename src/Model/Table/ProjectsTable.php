@@ -9,6 +9,14 @@ use Cake\Utility\Text;
 
 class ProjectsTable extends Table
 {
+    public function beforeSave($event, $entity, $options)
+    {
+        if ($entity->isNew() && !$entity->slug) {
+            $sluggedTitle = Text::slug($entity->short_title);
+            // trim slug to maximum length defined in schema
+            $entity->slug = substr($sluggedTitle, 0, 191);
+        }
+    }
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');

@@ -1,4 +1,4 @@
-  <!-- File: src/Template/Projects/index.ctp -->
+<!-- File: src/Template/Projects/index.ctp -->
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
@@ -7,17 +7,17 @@
         <li class="tab col s4"><a class="blue-grey-text" href="#myskills">My Skills</a></li>
       </ul>
     </div>
-    <div id="projectfeed">
+    <div id="projectfeed" class="col s12">
         <div class="row">
             <div class="col s0"></div>
             <div class="col s12 s3 m3">
-                <div class="card-panel white">
+                <div class="card-panel white z-depth-2">
                     Filter Menu
                 </div>
             </div>
             <div class="col s12 l8 m8"> 
             <?php foreach ($projects as $projects): ?>        
-                <div class="card white" style="font-size:10pt">
+                <div class="card white z-depth-2" style="font-size:10pt">
                     <div>
                         <div class="row valign-wrapper card-content">
                             <div class="col s12">
@@ -113,16 +113,59 @@
     </div>
     <div id="myprojects" class="col s12">
         <div class="row">
-            <div class="card white">
-                <div class="card-content">
-                    <span class="card-title">Projects
-                        <?= $this->Html->link('New','/projects/add', 
-                        ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small']
-                        );?>
-                    </span>
+            <div class="col s0"></div>
+            <div class="col s12 l2 m2">
+                <div class="card white z-depth-2">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <?= $this->Html->link('Create New','/projects/add', 
+                            ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small z-depth-5']
+                            );?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m9 l9">
+                <div class="card white z-depth-2">
+                    <div class="card-content">
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Short Title</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($myprojects as $myprojects): ?>
+                                <tr class="z-depth-1">
+                                    <td>
+                                        <?= $this->Html->link($myprojects->short_title, ['action' => 'view', 
+                                            $myprojects->description]) ?>
+                                    </td>
+                                    <td>
+                                        <?= $myprojects->status; ?>
+                                    </td>
+                                    <td>
+                                        <?= $myprojects->created->i18nFormat('MM/dd/yyyy'); ?>
+                                    </td>
+                                    <td>
+                                        <?= $this->Html->Link($this->Html->tag('i','edit', 
+                                            array('class'=>'material-icons')),array('action' => 'edit', 
+                                            $myprojects->slug),array('escape' => false));?>
+                                        <i class="material-icons red-text">delete</i>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
     <div id="myskills" class="col s12">Test 3</div>
 </div>
