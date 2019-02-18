@@ -54,28 +54,16 @@
             </div>
         </div>
         <div class="row">
-            <?= $this->form->label('Choose upto 3 skills you are looking for');?>
+            <?= $this->form->label('Select skills of collaborators (Hold ctrl to select muliple)');?>
         </div>
         <div class="row">
-            <div class="col s4 center browser-default">
-                <?= $this->Form->input('skills_1', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['CakePHP' => 'CakePHP', 'MySQL' => 'MySQL', 'HTML' => 'HTML'],
-                    'empty' => '(choose one)'),
-                );?>
-            </div>
-            <div class="col s4 center browser-default">
-                <?= $this->Form->input('skills_2', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['CakePHP' => 'CakePHP', 'MySQL' => 'MySQL', 'HTML' => 'HTML'],
-                    'empty' => '(choose one)'),
-                );?>
-            </div>
-            <div class="col s4 center browser-default">
-                <?= $this->Form->input('skills_3', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['CakePHP' => 'CakePHP', 'MySQL' => 'MySQL', 'HTML' => 'HTML'],
-                    'empty' => '(choose one)'),
+                <div  class="col s6">
+                    <input type="text" id="skillInput" onkeyup="filterSkills()" placeholder="Filter skills list..">
+                </div>
+            <div class="col s6">
+                <?= $this->Form->input('skills_requesting', array('type'=>'select','options'=>$allskills,
+                'multiple' => true, 'size'=>10,'class'=>'browser-default', 'style'=>'height:auto',
+                'label'=>false,'id'=>'skillsid')
                 );?>
             </div>
         </div>
@@ -100,10 +88,12 @@
     <div class="modal-footer blue-grey">
         <?= $this->Form->button(('Submit'),['class' => 'waves-effect waves-green btn-flat white-text'],
             ['type' => 'submit'])?>
-        <?= $this->Html->link('Cancel','/projects/index', ['class'=>'red darken-4 waves-effect waves-light 
+        <?= $this->Html->link('Cancel',$this->request->referer(), ['class'=>'red darken-4 waves-effect waves-light 
                 btn-small']
         );?>
     </div>
     <?= $this->Form->end() ?>
 </div>
 <!-- Modal Structure -->
+
+

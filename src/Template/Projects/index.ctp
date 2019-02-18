@@ -30,7 +30,8 @@
                                                 (<?= $projects->user->major?>)</span>
                                     </div>
                                     <div class="col s6">
-                                        <h6 class="brown-text "><?= $projects->short_title?>
+                                        <h6 class="brown-text" style="text-transform: capitalize">
+                                            <?= $projects->short_title?>
                                             (<?= $projects->type ?> Project)</h6>
                                     </div>
                                 </div>
@@ -50,7 +51,7 @@
                                 <div class="card-content white">
                                     <div id="info<?= $projects->id?>">
                                         <div class="row">
-                                            <div class="col s12 m8 l8">
+                                            <div class="col s12 m8 l8" style="text-align: justify;">
                                                 <?= $projects->description?>
                                             </div>
                                             <div class="col s12 m4 l4"> 

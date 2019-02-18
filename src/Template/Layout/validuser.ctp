@@ -16,21 +16,44 @@
             font-family: 'PT Serif', serif;
         }
         header, main {
-        padding-left: 200px;
+            padding-left: 200px;
         }
 
         @media only screen and (max-width : 992px) {
-        header, main {
-            padding-left: 0;
+            header, main {
+                padding-left: 0;
+            }
         }
+        .revcard {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
         }
+
+        .revtitle {
+            color: grey;
+            font-size: 18px;
+        }
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+        #skillInput {
+            border-box: box-sizing;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+        
     </style>
 </head>
-<body class="blue-grey-text">
+<body style="color:#263238 ">
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper blue-grey darken-2 z-depth-3" style="color:white;">
-                <ul class="left">
+            <div class="nav-wrapper blue-grey darken-2" style="color:white;">
+                <a href="#" data-target="sidenavout" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="left hide-on-med-and-down">
                     <li><h5>OffCampus</h5></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
@@ -55,6 +78,51 @@
             </div>      
         </nav>
     </div>
+    <ul id="slide-out" class="sidenav sidenav-fixed collection" 
+        style="width:200px;margin-top: 60px;">
+        <li><div class="brand-logo center">
+                <?=$this->Html->image('afterstudy.png');?>
+            </div></li>
+        <li class="collection-item">
+            <div><i class="material-icons">work</i>
+                <?= $this->Html->Link(
+                        'Projects',
+                        array('controller'=>'projects','action' => 'index'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">date_range</i> Events</a></div></li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">live_help</i> QA Forum</a></div></li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
+    </ul>
+    <ul id="sidenavout" class="sidenav collection hide-on-med-and-up" 
+        style="width:200px;margin-top: 60px;">
+        <li><div class="brand-logo center">
+                <?=$this->Html->image('afterstudy.png');?>
+            </div></li>
+        <li class="collection-item">
+            <div><i class="material-icons">work</i>
+                <?= $this->Html->Link(
+                        'Projects',
+                        array('controller'=>'projects','action' => 'index'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">date_range</i> Events</a></div></li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">live_help</i> QA Forum</a></div></li>
+        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
+            <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
+    </ul>
+
 
     <script>
         $(document).ready(function(){
@@ -64,32 +132,27 @@
             $('#projectmodal').modal('open');
             $('.tabs').tabs();
             $('.datepicker').datepicker({format:'yyyy-mm-dd'});
+            $('.tooltipped').tooltip();
+            $('select').formSelect();
         });
-    </script>
-    <div>
-        <ul id="slide-out" class="sidenav sidenav-fixed collection z-depth-2" style="width:200px;margin-top: 60px;">
-            <li><div class="brand-logo center">
-                <?=$this->Html->image('afterstudy.png');?>
-            </div></li>
-            <li class="collection-item">
-                <div><i class="material-icons">work</i>
-                    <?= $this->Html->Link(
-                            'Projects',
-                            array('controller'=>'projects','action' => 'index'),
-                            array('class'=>'blue-grey-text','escape' => false)
 
-                        );?>
-                </div>
-            </li>
-            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-                <i class="material-icons">date_range</i> Events</a></div></li>
-            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-                <i class="material-icons">live_help</i> QA Forum</a></div></li>
-            <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-                <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
-        </ul>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
+        function filterSkills() {
+            var input, filter, select, option, a, i, txtValue;
+            input = document.getElementById('skillInput');
+            filter = input.value.toUpperCase();
+            select = document.getElementById("skillsid");
+            option = select.getElementsByTagName('option');
+            for (i = 0; i < option.length; i++) {
+                txtValue = option[i].textContent || option[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    option[i].style.display = "";
+                } else {
+                    option[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    
     <main>
         <div>
             <div class="col s12" style="margin-left:3px">
