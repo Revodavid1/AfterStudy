@@ -61,7 +61,7 @@
                     <input type="text" id="skillInput" onkeyup="filterSkills()" placeholder="Filter skills list..">
                 </div>
             <div class="col s6">
-                <?= $this->Form->input('skills_requesting', array('type'=>'select','options'=>$allskills,
+                <?= $this->Form->input('skills._ids', array('type'=>'select','options'=>$allskills,
                 'multiple' => true, 'size'=>10,'class'=>'browser-default', 'style'=>'height:auto',
                 'label'=>false,'id'=>'skillsid')
                 );?>

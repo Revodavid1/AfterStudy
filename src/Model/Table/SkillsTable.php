@@ -7,7 +7,7 @@ use Cake\Validation\Validator;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 
-class SkillslistTable extends Table
+class SkillsTable extends Table
 {
     
 }

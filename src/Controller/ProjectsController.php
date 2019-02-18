@@ -25,11 +25,11 @@ class ProjectsController extends AppController
         }
         $this->set('project', $project);
 
-        $this->loadModel('Skillslist');
-        $allskills = $this->Skillslist->find('list', [
+
+        $allskills = $this->Projects->Skills->find('list',[
             'keyField' => 'id',
             'valueField' => 'skill_title',
-            'order' => 'Skillslist.id ASC'
+            'order' => 'Skills.id ASC'
         ]);
         $this->set(compact('allskills'));
 
