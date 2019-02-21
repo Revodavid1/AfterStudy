@@ -91,7 +91,7 @@
                                         <div class="row">
                                             <?php if (($projects->collaborators) > 0): ?>  
                                                 <div class="col s12 m4 l4">
-                                                    <p>Needs: <?= $projects->collaborators?></p>
+                                                    <p>Requested: <?= $projects->collaborators?></p>
                                                     <p>Interests: <?php echo(sizeof($projects->bids))?></p>
                                                     <p>Accepted: 0</p>
                                                 </div>
@@ -236,8 +236,11 @@
                                     </td>
                                     <td>
                                         <?= $this->Form->PostLink($this->Html->tag('i','delete', 
-                                            array('class'=>'material-icons')),array('action' => 'delete', 
-                                            $projectrequests->_matchingData['Bids']->id),array('class'=>'red-text','escape' => false));?>
+                                            array('class'=>'material-icons')),array('controller'
+                                            =>'bids','action' => 'delete', 
+                                            $projectrequests->_matchingData['Bids']->id),
+                                            array('class'=>'red-text','escape' => false));
+                                        ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
