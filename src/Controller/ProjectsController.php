@@ -5,6 +5,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM;
+use Cake\ORM\ResultSet;
+use  Cake\ORM\Table;
 
 class ProjectsController extends AppController
 {
@@ -38,7 +41,7 @@ class ProjectsController extends AppController
     public function edit($slug)
     {
         $this->layout= 'validuser'; 
-        $project = $this->Projects->findBySlug($slug)->firstOrFail();
+        $project = $this->Projects->findBySlug($slug)->contain(['Skills'])->firstOrFail();
         if ($this->request->is(['post', 'put'])) {
             $this->Projects->patchEntity($project, $this->request->getData());
             if ($this->Projects->save($project)) {
@@ -46,7 +49,12 @@ class ProjectsController extends AppController
             }
             $this->Flash->error(__('Unable to update your project.'));
         }
-
+        $allskills = $this->Projects->Skills->find('list',[
+            'keyField' => 'id',
+            'valueField' => 'skill_title',
+            'order' => 'Skills.id ASC'
+        ]);
+        $this->set(compact('allskills'));
         $this->set('project', $project);
     }
     public function index() 
@@ -54,7 +62,7 @@ class ProjectsController extends AppController
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
         $projects = $this->Paginator->paginate($this->Projects->find('all',array(
-            'order' => array('projects.id' => 'desc')))->contain(['Users']));
+            'order' => array('projects.id' => 'desc')))->contain(['Users','Skills','Bids']));
         $this->set(compact('projects'));
 
         $options = array(
@@ -64,6 +72,13 @@ class ProjectsController extends AppController
         $this->loadComponent('Paginator');
         $myprojects = $this->Paginator->paginate($this->Projects->find('all',$options));
         $this->set(compact('myprojects'));
+
+        $query  = $this->Projects->find('all',array(
+            'order' => array('Bids.created' => 'desc')))->contain(['Users']);
+        $query ->matching('Bids',function ($q) {
+            return $q->where(['Bids.user_id' => $this->Auth->user('id')]);
+        });
+        $this->set('projectrequests',$query);
     }
 
     public function initialize()
@@ -77,7 +92,8 @@ class ProjectsController extends AppController
     public function isAuthorized($user) {
         if ($this->request->getParam('action') === 'index' || 
             $this->request->getParam('action') === 'add' ||
-            $this->request->getParam('action') === 'edit'  ) {
+            $this->request->getParam('action') === 'edit'||
+            $this->request->getParam('action') === 'request'  ) {
             return true;
         }
         return parent::isAuthorized($user);

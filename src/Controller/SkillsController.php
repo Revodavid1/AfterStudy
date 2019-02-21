@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-class SkillslistController extends AppController
+class SkillsController extends AppController
 {
     
 }

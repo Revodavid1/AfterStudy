@@ -1,6 +1,6 @@
 <div class="row"></div>
 <div class="row" style="margin-right:10px">
-    <div class="col s12 m4 l4">
+    <div class="col s12 m3 l3">
         <div class="revcard card">
             <div class="card-image">
                 <?=$this->Html->image('port.jpg',['style'=>'width:100%;max-height: 200px;']);?>
@@ -28,25 +28,10 @@
             </div>
         </div>
     </div>
-    <div class="col s12 l4 m4"></div>
-    <div class="col s12 l4 m4">
-        <div class="card white">
-            <div class="card-content">
-                <span class="card-title">Birthdays</span>
-                <p>My Birthday: <?= $this->Session->read('Auth.User.dob')->i18nFormat('MM/dd');?></p>
-                <hr style="border-top: 1px dotted green;">
-                <span class="card-title">Birthdays Today</span>
-                <p>(None)</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row" style="margin-left:10px;margin-right:10px">
-    <div class="col s12 m3 l3">
+    <div class="col s12 l3 m3">
         <div class="row">
             <div class="col s12">
-                <div class="card-panel white">
+                <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
                         <span class="card-title">Projects</span>
                     </div>
@@ -55,25 +40,31 @@
         </div> 
         <div class="row">
             <ul class="col s12 collection">
-                <li class="collection-item"><div><?=$myprojectcount?> Projects created
-                    <?= $this->Html->Link(
-                        $this->Html->tag('i','add', array('class'=>
+                <li class="collection-item"><div>I created <span class="chip brown badge white-text"><?=$myprojectcount?></span>
+                    <?= $this->Html->Link($this->Html->tag('i','add', array('class'=>
                         'material-icons avatar black circle white-text tooltipped',
-                        'data-position'=>'bottom',
-                        'data-tooltip'=>'Add a Project')),
+                        'data-position'=>'bottom','data-tooltip'=>'Add a Project')),
                         array('controller'=>'projects','action' => 'add'),array('class'=>'secondary-content',
                         'escape' => false)
                     );?>
                 </div></li>
-                <li class="collection-item"><div>0 Projects joined<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar black circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View Projects to Join">remove_red_eye</i></a></div></li>
-                <li class="collection-item"><div>0 Projects collaborated with<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>I requested to join <span class="chip brown badge white-text">
+                    <?=$requestedprojectcount?></span>
+                    <a href="#!" class="secondary-content">
+                    <i class="material-icons avatar orange circle white-text tooltipped"
+                    data-position="bottom" data-tooltip="View requests">forward</i></a></div></li>
+                <li class="collection-item"><div>0 your request accepted<a href="#!" class="secondary-content">
+                    <i class="material-icons avatar green circle white-text tooltipped"
+                    data-position="bottom" data-tooltip="View accepted requests">check</i></a></div></li>
+                <li class="collection-item"><div>0 your request rejected<a href="#!" class="secondary-content">
+                    <i class="material-icons avatar red circle white-text tooltipped"
+                    data-position="bottom" data-tooltip="View rejected requests">highlight_off</i></a></div></li>
+                <li class="collection-item"><div>0 collaborated with<a href="#!" class="secondary-content">
                     <i class="material-icons avatar white  black-text tooltipped"
                     data-position="bottom" data-tooltip="See Requests to Collaborate">people</i></a></div></li>
-                <li class="collection-item"><div>0 Projects completed<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>0 completed<a href="#!" class="secondary-content">
                     <i class="material-icons avatar green circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View Completed Projects">check</i></a></div></li>
+                    data-position="bottom" data-tooltip="View Completed Projects">event_available</i></a></div></li>
                 <li class="collection-item"><div>0 Average Rating<a href="#!" class="secondary-content">
                     <i class="material-icons avatar amber-text white tooltipped"
                     data-position="bottom" data-tooltip="See Project Ratings">star</i></a></div></li>
@@ -83,7 +74,7 @@
     <div class="col s12 m3 l3">
         <div class="row">
             <div class="col s12">
-                <div class="card-panel white">
+                <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
                         <span class="card-title">QA</span>
                     </div>
@@ -94,24 +85,16 @@
     <div class="col s12 m3 l3">
         <div class="row">
             <div class="col s12">
-                <div class="card-panel white">
+                <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
-                        <span class="card-title">Events</span>
+                        <span class="card-title">Groups</span>
                     </div>
                 </div>
             </div>
         </div> 
     </div>
-    <div class="col s12 m3 l3">
-        <div class="row">
-            <div class="col s12">
-                <div class="card-panel white">
-                    <div class="card-content">
-                        <span class="card-title">MarketPlace</span>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </div>
-        
 </div>
+
+<!--<p>My Birthday: 
+<?= $this->Session->read('Auth.User.dob')->i18nFormat('MM/dd');?>
+</p>-->

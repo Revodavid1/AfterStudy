@@ -94,11 +94,9 @@
             </div>
         </li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">date_range</i> Events</a></div></li>
-        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
             <i class="material-icons">live_help</i> QA Forum</a></div></li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
+            <i class="material-icons">person_add</i> Groups</a></div></li>
     </ul>
     <ul id="sidenavout" class="sidenav collection hide-on-med-and-up" 
         style="width:200px;margin-top: 60px;">
@@ -116,11 +114,9 @@
             </div>
         </li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">date_range</i> Events</a></div></li>
-        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
             <i class="material-icons">live_help</i> QA Forum</a></div></li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">local_grocery_store</i> MarketPlace</a></div></li>
+            <i class="material-icons">person_add</i> Groups</a></div></li>
     </ul>
 
 

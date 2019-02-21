@@ -4,7 +4,7 @@
       <ul class="tabs">
         <li class="tab col s4"><a class="active blue-grey-text" href="#projectfeed">Timeline</a></li>
         <li class="tab col s4"><a class="blue-grey-text" href="#myprojects ">My Projects</a></li>
-        <li class="tab col s4"><a class="blue-grey-text" href="#myskills">My Skills</a></li>
+        <li class="tab col s4"><a class="blue-grey-text" href="#myrequests">My Requests</a></li>
       </ul>
     </div>
     <div id="projectfeed" class="col s12">
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="col s12 l8 m8"> 
-            <?php foreach ($projects as $projects): ?>        
+            <?php foreach ($projects as $projects): ?>   
                 <div class="card white z-depth-2" style="font-size:10pt">
                     <div>
                         <div class="row valign-wrapper card-content">
@@ -89,17 +89,52 @@
                                     </div>
                                     <div id="collaborators<?= $projects->id?>">
                                         <div class="row">
-                                            <div class="col s12 m4 l4">
-                                                <p>Requested <?= $projects->collaborators?> 
-                                                    collaborators, Interests:0, Accepted:0</p>
-                                            </div>
-                                            <div class="col s12 m4 l4">
-                                                <p>Skills Required:</p>
-                                            </div>
-                                            <div class="col s12 m4 l4">
-                                                <button class="btn-small black white-text" 
-                                                    style="margin-top:3px">Request to join</button>
-                                            </div>
+                                            <?php if (($projects->collaborators) > 0): ?>  
+                                                <div class="col s12 m4 l4">
+                                                    <p>Needs: <?= $projects->collaborators?></p>
+                                                    <p>Interests: <?php echo(sizeof($projects->bids))?></p>
+                                                    <p>Accepted: 0</p>
+                                                </div>
+                                                <?php if ($projects->skills): ?>    
+                                                    <div class="col s12 m4 l4">
+                                                        <p>Skills requested: 
+                                                            <?php foreach ($projects->skills as $projectskills): ?>    
+                                                                <p><?=$projectskills['skill_title'];?> </p>
+                                                            <?php endforeach; ?>
+                                                        </p>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <div class="col s12 m4 l4">
+                                                        <p>No skills requested</p>
+                                                    </div>
+                                                <?php endif; ?>
+                                                    <?php if (($projects->user->id) === ($this->Session->read
+                                                        ('Auth.User.id'))): ?>    
+                                                    <?php else: ?>
+                                                        <?php $requested=array_search($this->Session->read
+                                                            ('Auth.User.id'),array_column($projects->bids,
+                                                            'user_id'));?>
+                                                        <?php if (is_int($requested)): ?> 
+                                                            <div class="col s12 m4 l4">
+                                                                <?= $this->Form->button('Requested',
+                                                                ['class'=>'btn-small black white-text disabled'])
+                                                                ?>
+                                                            </div>
+                                                            <?php else: ?>
+                                                            <div class="col s12 m4 l4">
+                                                                <?= $this->Form->PostLink('Request to Join',
+                                                                ['controller'=>'bids','action' => 'add', 
+                                                                $projects->id],
+                                                                ['class'=>'btn-small black white-text'])
+                                                                ?>
+                                                            </div>
+                                                            <?php endif; ?>   
+                                                    <?php endif; ?>   
+                                                <?php else: ?>
+                                                    <div class="col s12 m4 l4">
+                                                        <p>No collaborators requested</p>
+                                                    </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +201,52 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div id="myskills" class="col s12">Test 3</div>
+    <div id="myrequests" class="col s12">
+        <div class="row">
+            <div class="col s0 m1 l1"></div>
+            <div class="col s12 m10 l10">
+                <div class="card white z-depth-2">
+                    <div class="card-content">
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Project Title</th>
+                                    <th>Status</th>
+                                    <th>Owned By</th>
+                                    <th>Last Updated On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($projectrequests as $projectrequests): ?>
+                                <tr class="z-depth-1">
+                                    <td>
+                                        <?= $projectrequests->short_title ?>
+                                    </td>
+                                    <td>
+                                        <?= $projectrequests->_matchingData['Bids']->status; ?>
+                                    </td>
+                                    <td>
+                                        <?= $projectrequests->user->fullname; ?>
+                                    </td>
+                                    <td>
+                                        <?= $projectrequests->_matchingData['Bids']->modified
+                                            ->i18nFormat('MM/dd/yyyy'); ?>
+                                    </td>
+                                    <td>
+                                        <?= $this->Form->PostLink($this->Html->tag('i','delete', 
+                                            array('class'=>'material-icons')),array('action' => 'delete', 
+                                            $projectrequests->_matchingData['Bids']->id),array('class'=>'red-text','escape' => false));?>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col s0 m1 l1"></div>
+        </div>
+    </div>
 </div>

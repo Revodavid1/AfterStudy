@@ -1,5 +1,5 @@
 <?php
-// src/Model/Table/SkillslistTable.php
+// src/Model/Table/SkillsTable.php
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -9,5 +9,8 @@ use Cake\Utility\Text;
 
 class SkillsTable extends Table
 {
-    
+    public function initialize(array $config)
+    {
+        $this->belongsToMany('Projects');
+    }
 }

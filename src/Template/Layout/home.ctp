@@ -54,13 +54,6 @@
                         </div>
                     </li>
                     <li>
-                        <?=$this->Html->image('events.jpg', ['alt' => 'Events']);?>
-                        <div class="caption left-align">
-                            <h3>Events</h3>
-                            <h5 class="light grey-text text-lighten-3">Share Events and Socialize</h5>
-                        </div>
-                    </li>
-                    <li>
                         <?=$this->Html->image('qa.jpg', ['alt' => 'QA']);?>
                         <div class="caption right-align">
                             <h3>QA Forum</h3>

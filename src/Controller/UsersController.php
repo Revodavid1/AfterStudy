@@ -47,6 +47,12 @@ class UsersController extends AppController
         ->where(['Projects.User_id' =>$this->Auth->user('id')]);
         $myprojectcount = $query->count();
         $this->set('myprojectcount', $myprojectcount);
+
+        $requestedquery = $this->Users->find()->innerJoinWith('Bids')
+        ->select(['Users.id', 'Bids.user_id'])
+        ->where(['Bids.user_id' =>$this->Auth->user('id')]);
+        $requestedprojectcount = $requestedquery->count();
+        $this->set('requestedprojectcount', $requestedprojectcount);
     }
     public function initialize()
     {
