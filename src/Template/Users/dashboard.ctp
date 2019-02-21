@@ -27,28 +27,56 @@
                 </div>
             </div>
         </div>
+        <div class="row" >
+            <ul class="collapsible with-header">
+                <li>
+                <div class="collapsible-header">
+                    <h4>Skills<i class="material-icons">keyboard_arrow_down</i><span>
+                        <a class="orange waves-effect waves-light btn-small modal-trigger circle" 
+                        href="#addskillsmodal">Edit</a></span>
+                    </h4>
+                   
+                </div>
+                
+                    <div class="collapsible-body active"><span>
+                        <table>
+                            <tbody>
+                            <?php foreach ($skillsadd->skills as $myskills): ?>
+                                <tr>
+                                    <td><?=$myskills->skill_title?></td>
+                                    <td><a href="#!" class="secondary-content red-text">
+                                    <i class="material-icons">highlight_off</i></a></td>
+                                </tr>
+                        <?php endforeach ?>
+                        
+                        </tbody>
+                            </table>
+                    </span></div>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="col s12 l3 m3">
         <div class="row">
             <div class="col s12">
                 <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
-                        <span class="card-title">Projects</span>
+                        <span class="card-title">Projects<?= $this->Html->Link($this->Html->tag('i','add', 
+                            array('class'=>'material-icons avatar black circle white-text tooltipped',
+                            'data-position'=>'bottom','data-tooltip'=>'Add a Project')),
+                            array('controller'=>'projects','action' => 'add'),
+                            array('class'=>'secondary-content','escape' => false)
+                    );?></span>
                     </div>
                 </div>
             </div>
         </div> 
         <div class="row">
             <ul class="col s12 collection">
-                <li class="collection-item"><div>I created <span class="chip brown badge white-text"><?=$myprojectcount?></span>
-                    <?= $this->Html->Link($this->Html->tag('i','add', array('class'=>
-                        'material-icons avatar black circle white-text tooltipped',
-                        'data-position'=>'bottom','data-tooltip'=>'Add a Project')),
-                        array('controller'=>'projects','action' => 'add'),array('class'=>'secondary-content',
-                        'escape' => false)
-                    );?>
-                </div></li>
-                <li class="collection-item"><div>I requested to join <span class="chip brown badge white-text">
+                <li class="collection-item"><div>Projects Created <span class="chip black badge white-text">
+                    <?=$myprojectcount?></span></div>
+                </li>
+                <li class="collection-item"><div>I requested to join <span class="chip orange badge white-text">
                     <?=$requestedprojectcount?></span>
                     <a href="#!" class="secondary-content">
                     <i class="material-icons avatar orange circle white-text tooltipped"
@@ -98,3 +126,35 @@
 <!--<p>My Birthday: 
 <?= $this->Session->read('Auth.User.dob')->i18nFormat('MM/dd');?>
 </p>-->
+
+
+<!-- Modal Structure -->
+<div id="addskillsmodal" class="modal white">
+    <div class="modal-content">
+        <?= $this->Flash->render() ?>
+        <h4>Add Skills</h4>
+        <?= $this->Form->create($skillsadd)?>
+        <div class="row">
+            <?= $this->Form->label('Select skills of collaborators (Hold ctrl to select muliple)');?>
+        </div>
+        <div class="row">
+            <div  class="col s6">
+                <input type="text" id="skillInput" onkeyup="filterSkills()" placeholder="Filter skills list..">
+            </div>
+            <div class="col s6">
+                <?= $this->Form->input('skills._ids', array('type'=>'select','options'=>$allskills,
+                'multiple' => true, 'size'=>10,'class'=>'browser-default', 'style'=>'height:auto',
+                'label'=>false,'id'=>'skillsid')
+                );?>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer blue-grey">
+        <?= $this->Form->button(('Submit'),['class' => 'waves-effect green waves-light btn-flat white-text'],
+            ['type' => 'submit'])?>
+         <a href="#!" class="modal-close red white-text waves-effect waves-light btn-flat">Cancel</a>
+    
+    </div>
+    <?= $this->Form->end() ?>
+</div>
+<!-- Modal Structure -->

@@ -57,6 +57,8 @@
                     <li><h5>OffCampus</h5></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
+                    <li class="white-text"><?= $this->Session->read('Auth.User.fullname');?>
+                    </li>
                     <li>
                         <?= $this->Html->Link(
                             $this->Html->tag('i','dashboard', array('class'=>'material-icons')),
@@ -126,10 +128,12 @@
             $('.modal').modal({dismissible:false});
             //$('.modal').modal();
             $('#projectmodal').modal('open');
+            $('#addskillsmodal').modal();
             $('.tabs').tabs();
             $('.datepicker').datepicker({format:'yyyy-mm-dd'});
             $('.tooltipped').tooltip();
             $('select').formSelect();
+            $('.collapsible').collapsible();
         });
 
         function filterSkills() {

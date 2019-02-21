@@ -86,7 +86,7 @@
         </div>
     </div>
     <div class="modal-footer blue-grey">
-        <?= $this->Form->button(('Submit'),['class' => 'waves-effect waves-green btn-flat white-text'],
+        <?= $this->Form->button(('Submit'),['class' => 'green waves-effect waves-light btn-flat white-text'],
             ['type' => 'submit'])?>
         <?= $this->Html->link('Cancel',$this->request->referer(), ['class'=>'red darken-4 waves-effect waves-light 
                 btn-small']

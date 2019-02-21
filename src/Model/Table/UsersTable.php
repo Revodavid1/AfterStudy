@@ -12,7 +12,8 @@ class UsersTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->hasMany('Projects');
-        $this->hasMany('Bids');
+        $this->hasMany('Bids'); 
+        $this->belongsToMany('Skills',['joinTable' => 'users_skills','dependent' => true]);
     }
     public function validationDefault(Validator $validator)
     {

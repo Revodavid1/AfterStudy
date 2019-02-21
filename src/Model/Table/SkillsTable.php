@@ -12,5 +12,6 @@ class SkillsTable extends Table
     public function initialize(array $config)
     {
         $this->belongsToMany('Projects');
+        $this->belongsToMany('Users');
     }
 }

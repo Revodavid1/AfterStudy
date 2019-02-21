@@ -53,6 +53,22 @@ class UsersController extends AppController
         ->where(['Bids.user_id' =>$this->Auth->user('id')]);
         $requestedprojectcount = $requestedquery->count();
         $this->set('requestedprojectcount', $requestedprojectcount);
+
+        $skillsadd = $this->Users->findById($this->Auth->user('id'))->contain(['Skills'])->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Users->patchEntity($skillsadd, $this->request->getData());
+            if ($this->Users->save($skillsadd)) {
+                return $this->redirect(['action' => 'dashboard']);
+            }
+            $this->Flash->error(__('Unable to add skills'));
+        }
+        $allskills = $this->Users->Skills->find('list',[
+            'keyField' => 'id',
+            'valueField' => 'skill_title',
+            'order' => 'Skills.id ASC'
+        ]);
+        $this->set(compact('allskills'));
+        $this->set('skillsadd', $skillsadd);
     }
     public function initialize()
     {
