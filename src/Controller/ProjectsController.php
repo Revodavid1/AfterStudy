@@ -93,10 +93,23 @@ class ProjectsController extends AppController
         if ($this->request->getParam('action') === 'index' || 
             $this->request->getParam('action') === 'add' ||
             $this->request->getParam('action') === 'edit'||
+            $this->request->getParam('action') === 'manage'||
             $this->request->getParam('action') === 'request'  ) {
             return true;
         }
         return parent::isAuthorized($user);
+    }
+    public function manage($id = null)
+    {
+        $this->layout='validuser';
+        if (!$id) {
+            throw new NotFoundException(__('Invalid Project'));
+        }
+        $thisproject = $this->Projects->findById($id)->contain(['Users','Bids','Skills']);
+        if (!$thisproject) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+        $this->set('thisproject', $thisproject);
     }
 }
 ?>

@@ -178,8 +178,8 @@
                                 <?php foreach ($myprojects as $myprojects): ?>
                                 <tr class="z-depth-1">
                                     <td>
-                                        <?= $this->Html->link($myprojects->short_title, ['action' => 'view', 
-                                            $myprojects->description]) ?>
+                                        <?= $this->Html->link($myprojects->short_title, ['action' => 'manage', 
+                                            $myprojects->id]) ?>
                                     </td>
                                     <td>
                                         <?= $myprojects->status; ?>

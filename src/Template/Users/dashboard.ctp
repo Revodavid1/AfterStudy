@@ -1,5 +1,5 @@
 <div class="row"></div>
-<div class="row" style="margin-right:10px">
+<div class="row" style="margin-left:0.5px;margin-right:0.5px;">
     <div class="col s12 m3 l3">
         <div class="revcard card">
             <div class="card-image">
@@ -30,28 +30,25 @@
         <div class="row" >
             <ul class="collapsible with-header">
                 <li>
-                <div class="collapsible-header">
-                    <h4>Skills<i class="material-icons">keyboard_arrow_down</i><span>
-                        <a class="orange waves-effect waves-light btn-small modal-trigger circle" 
-                        href="#addskillsmodal">Edit</a></span>
-                    </h4>
-                   
-                </div>
-                
-                    <div class="collapsible-body active"><span>
-                        <table>
-                            <tbody>
-                            <?php foreach ($skillsadd->skills as $myskills): ?>
-                                <tr>
-                                    <td><?=$myskills->skill_title?></td>
-                                    <td><a href="#!" class="secondary-content red-text">
-                                    <i class="material-icons">highlight_off</i></a></td>
-                                </tr>
-                        <?php endforeach ?>
-                        
-                        </tbody>
+                    <div class="collapsible-header">
+                        <h4><i class="material-icons">keyboard_arrow_down</i>Skills<span>
+                            <a class="orange waves-effect waves-light btn-small modal-trigger circle" 
+                            href="#addskillsmodal">Edit</a></span>
+                        </h4>
+                    </div>
+                    <div class="collapsible-body active">
+                        <span>
+                            <table class="responsive-table">
+                                <tbody>
+                                <?php foreach ($skillsadd->skills as $myskills): ?>
+                                    <tr class="z-depth-1">
+                                        <td><?=$myskills->skill_title?></td>
+                                    </tr>
+                                <?php endforeach ?>
+                                </tbody>
                             </table>
-                    </span></div>
+                        </span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -76,11 +73,14 @@
                 <li class="collection-item"><div>Projects Created <span class="chip black badge white-text">
                     <?=$myprojectcount?></span></div>
                 </li>
-                <li class="collection-item"><div>I requested to join <span class="chip orange badge white-text">
-                    <?=$requestedprojectcount?></span>
-                    <a href="#!" class="secondary-content">
-                    <i class="material-icons avatar orange circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View requests">forward</i></a></div></li>
+                <li class="collection-item"><div>Requests to join 
+                    <span class="chip orange badge white-text"><?=$requestedprojectcount?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Requests to join me
+                    <span class="chip orange badge white-text">0</span>
+                    </div>
+                </li>
                 <li class="collection-item"><div>0 your request accepted<a href="#!" class="secondary-content">
                     <i class="material-icons avatar green circle white-text tooltipped"
                     data-position="bottom" data-tooltip="View accepted requests">check</i></a></div></li>
