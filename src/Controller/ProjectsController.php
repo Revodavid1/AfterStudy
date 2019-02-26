@@ -110,6 +110,11 @@ class ProjectsController extends AppController
             throw new NotFoundException(__('Invalid post'));
         }
         $this->set('thisproject', $thisproject);
+
+        $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
+        ->order(['Bids.id'=> 'desc']);
+        $this->set(compact('bidders'));
+
     }
 }
 ?>

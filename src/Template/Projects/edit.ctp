@@ -7,11 +7,11 @@
         <h4>Edit Project</h4>
         <?= $this->Form->create($project)?>
         <?php 
-        $selected = []; 
-        foreach($project->skills as $key => $value)
-        {
-            array_push($selected,$value['id']);
-        }                                  
+            $selected = []; 
+            foreach($project->skills as $key => $value)
+            {
+                array_push($selected,$value['id']);
+            }                                  
         ?>
          
         <div class="row">
