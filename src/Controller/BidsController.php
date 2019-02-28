@@ -20,9 +20,45 @@ class BidsController extends AppController
                 return $this->redirect(['controller'=>'projects','action' => 'index',
                 '#' => 'myrequests', 'escape' => false]);
             }
-            $this->Flash->error(__('Unable to update your project.'));
+            $this->Flash->error(__('Unable to add your bid.'));
         }
         $this->set('bid', $bid);
+    }
+    public function acceptbid($id)
+    {
+        $this->layout= 'validuser'; 
+        $bidtoedit = $this->Bids->findById($id)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Bids->patchEntity($bidtoedit, $this->request->getData());
+            $bidtoedit->status = 'Accepted';
+            if ($this->Bids->save($bidtoedit)) {
+                return $this->redirect($this->request->referer());
+            }
+        }
+    }
+    public function rejectbid($id)
+    {
+        $this->layout= 'validuser'; 
+        $bidtoedit = $this->Bids->findById($id)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Bids->patchEntity($bidtoedit, $this->request->getData());
+            $bidtoedit->status = 'Rejected';
+            if ($this->Bids->save($bidtoedit)) {
+                return $this->redirect($this->request->referer());
+            }
+        }
+    }
+    public function ignorebid($id)
+    {
+        $this->layout= 'validuser'; 
+        $bidtoedit = $this->Bids->findById($id)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Bids->patchEntity($bidtoedit, $this->request->getData());
+            $bidtoedit->status = 'Ignored';
+            if ($this->Bids->save($bidtoedit)) {
+                return $this->redirect($this->request->referer());
+            }
+        }
     }
     public function delete($id)
     {
@@ -49,7 +85,11 @@ class BidsController extends AppController
     }
     public function isAuthorized($user) {
         if ($this->request->getParam('action') === 'add' ||
-            $this->request->getParam('action') === 'delete' ) {
+            $this->request->getParam('action') === 'delete'||
+            $this->request->getParam('action') === 'acceptbid'
+            ||
+            $this->request->getParam('action') === 'rejectbid'||
+            $this->request->getParam('action') === 'ignorebid' ) {
             return true;
         }
         return parent::isAuthorized($user);

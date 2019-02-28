@@ -37,7 +37,6 @@ class ProjectsController extends AppController
         $this->set(compact('allskills'));
 
     }
-    
     public function edit($slug)
     {
         $this->layout= 'validuser'; 
@@ -114,7 +113,6 @@ class ProjectsController extends AppController
         $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
         ->order(['Bids.id'=> 'desc']);
         $this->set(compact('bidders'));
-
     }
 }
 ?>
