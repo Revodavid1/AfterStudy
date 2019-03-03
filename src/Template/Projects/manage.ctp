@@ -116,92 +116,102 @@
             <div class="card-panel white z-depth-2">
                 <div class="card-content">
                     <span class="card-title">Requests</span> 
-                    <?php foreach ($bidders as $bidders): ?>
-                        <?php
-                            //echo($bidders->id);
-                            $reqskill=[];
-                            $myskill=[];
-                            foreach ($thisproject->skills as $allskill):
-                                array_push($reqskill,$allskill->skill_title);
-                            endforeach;
-                            foreach ($bidders->user->skills as $bidskill):
-                                array_push($myskill,$bidskill->skill_title);
-                            endforeach;
-                            $matchingskills = array_intersect($reqskill, $myskill);
-                        ?>  
-                        <div class="card">
-                            <div class="card-content">
-                                <span class="grey-text text-darken-4">
-                                    Requestor: <?= $bidders->user->fullname ?>
-                                    <?php if($bidders->status == 'Requested'):?>
-                                        <p class="chip orange badge white-text right z-depth-2">
-                                        <?= $bidders->status ?>
-                                    <?php elseif($bidders->status == 'Accepted'):?>
-                                        <p class="chip green badge white-text right z-depth-2">
-                                        <?= $bidders->status ?>
-                                    <?php elseif($bidders->status == 'Rejected'):?>
-                                        <p class="chip red badge white-text right z-depth-2">
-                                        <?= $bidders->status ?>
-                                    <?php elseif($bidders->status == 'Ignored'):?>
-                                        <p class="chip brown badge white-text right z-depth-2">
-                                        <?= $bidders->status ?>
-                                    <?php endif ?>
-                                    </p>
-                                </span>
-                                <p>Date: <?= $bidders->created->i18nFormat('MM/dd/yyyy') ?></p>
-                                <p>Matched Required Skills: 
-                                    <?php if (sizeof($matchingskills)>0): ?>
-                                        <?php foreach ($matchingskills as $key => $value): ?>
-                                            <a class="btn-flat green-text"><?=$value;?></a>  
+                    <?php if ($thisproject->user_id == $this->Session->read('Auth.User.id')):?>
+                        <?php foreach ($bidders as $bidders): ?>
+                            <?php
+                                //echo($bidders->id);
+                                $reqskill=[];
+                                $myskill=[];
+                                foreach ($thisproject->skills as $allskill):
+                                    array_push($reqskill,$allskill->skill_title);
+                                endforeach;
+                                foreach ($bidders->user->skills as $bidskill):
+                                    array_push($myskill,$bidskill->skill_title);
+                                endforeach;
+                                $matchingskills = array_intersect($reqskill, $myskill);
+                            ?>  
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="grey-text text-darken-4">
+                                        Requestor: <?= $bidders->user->fullname ?>
+                                        <?php if($bidders->status == 'Requested'):?>
+                                            <p class="chip orange badge white-text right z-depth-2">
+                                            <?= $bidders->status ?>
+                                        <?php elseif($bidders->status == 'Accepted'):?>
+                                            <p class="chip green badge white-text right z-depth-2">
+                                            <?= $bidders->status ?>
+                                        <?php elseif($bidders->status == 'Rejected'):?>
+                                            <p class="chip red badge white-text right z-depth-2">
+                                            <?= $bidders->status ?>
+                                        <?php elseif($bidders->status == 'Ignored'):?>
+                                            <p class="chip brown badge white-text right z-depth-2">
+                                            <?= $bidders->status ?>
+                                        <?php endif ?>
+                                        </p>
+                                    </span>
+                                    <p>Date: <?= $bidders->created->i18nFormat('MM/dd/yyyy') ?></p>
+                                    <p>Matched Required Skills: 
+                                        <?php if (sizeof($matchingskills)>0): ?>
+                                            <?php foreach ($matchingskills as $key => $value): ?>
+                                                <a class="btn-flat green-text"><?=$value;?></a>  
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <a class="btn-flat red-text">None</a>  
+                                        <?php endif ?>     
+                                    </p>  
+                                    <a class="blue-grey white-text waves-effect waves-light btn-small activator">
+                                        View Requestor's Other Skills
+                                    </a>                          
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-3"><?= $bidders->user->fullname ?> 
+                                    (<?= $bidders->user->major ?>)
+                                    <i class="material-icons right">close</i></span>
+                                    <p>Skills: 
+                                        <?php foreach ($bidders->user->skills as $requesterskill):?>
+                                            <a class="btn-flat blue-grey-text"><?=$requesterskill->skill_title;?>
+                                            </a>       
                                         <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <a class="btn-flat red-text">None</a>  
-                                    <?php endif ?>     
-                                </p>  
-                                <a class="blue-grey white-text waves-effect waves-light btn-small activator">
-                                    View Requestor's Other Skills
-                                </a>                          
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <?php if($bidders->status == 'Accepted'):?>
+                                        <?= $this->Form->button('Accepted',
+                                        ['class'=>'btn-small black white-text disabled'])
+                                        ?>
+                                    <?php else:?>
+                                        <?= $this->Form->PostLink('Accept',['controller'=>'bids',
+                                        'action' => 'acceptbid',$bidders->id],['class'=>'btn-small green white-text'])?>
+                                    <?php endif?>
+                                    <?php if($bidders->status == 'Rejected'):?>
+                                        <?= $this->Form->button('Rejected',
+                                        ['class'=>'btn-small black white-text disabled'])
+                                        ?>
+                                    <?php else:?>
+                                        <?= $this->Form->PostLink('Reject',['controller'=>'bids',
+                                        'action' => 'rejectbid',$bidders->id],['class'=>'btn-small red white-text'])?>
+                                    <?php endif?>
+                                    <?php if($bidders->status == 'Ignored'):?>
+                                        <?= $this->Form->button('Ignored',
+                                        ['class'=>'btn-small black white-text disabled'])
+                                        ?>
+                                    <?php else:?>
+                                        <?= $this->Form->PostLink('Ignore',['controller'=>'bids',
+                                        'action' => 'ignorebid',$bidders->id],['class'=>'btn-small brown white-text'])?>
+                                    <?php endif?> 
+                                </div>
                             </div>
-                            <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-3"><?= $bidders->user->fullname ?> 
-                                (<?= $bidders->user->major ?>)
-                                <i class="material-icons right">close</i></span>
-                                <p>Skills: 
-                                    <?php foreach ($bidders->user->skills as $requesterskill):?>
-                                        <a class="btn-flat blue-grey-text"><?=$requesterskill->skill_title;?>
-                                        </a>       
-                                    <?php endforeach; ?>
-                                </p>
-                            </div>
-                            <div class="card-action">
-                                <?php if($bidders->status == 'Accepted'):?>
-                                    <?= $this->Form->button('Accepted',
-                                     ['class'=>'btn-small black white-text disabled'])
-                                    ?>
-                                <?php else:?>
-                                    <?= $this->Form->PostLink('Accept',['controller'=>'bids',
-                                    'action' => 'acceptbid',$bidders->id],['class'=>'btn-small green white-text'])?>
-                                <?php endif?>
-                                <?php if($bidders->status == 'Rejected'):?>
-                                    <?= $this->Form->button('Rejected',
-                                     ['class'=>'btn-small black white-text disabled'])
-                                    ?>
-                                <?php else:?>
-                                    <?= $this->Form->PostLink('Reject',['controller'=>'bids',
-                                    'action' => 'rejectbid',$bidders->id],['class'=>'btn-small red white-text'])?>
-                                <?php endif?>
-                                <?php if($bidders->status == 'Ignored'):?>
-                                    <?= $this->Form->button('Ignored',
-                                     ['class'=>'btn-small black white-text disabled'])
-                                    ?>
-                                <?php else:?>
-                                    <?= $this->Form->PostLink('Ignore',['controller'=>'bids',
-                                    'action' => 'ignorebid',$bidders->id],['class'=>'btn-small brown white-text'])?>
-                                <?php endif?> 
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="icon-block">
+                                    <h2 class="center blue-grey-text"><?= $bidderscount ?></h2>
+                                    <h5 class="center">Total Project Request</h5>
+                                </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>      
-                        
+                    <?php endif ?>            
                 </div>
             </div>
         </div>

@@ -123,7 +123,9 @@ class ProjectsController extends AppController
 
         $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
         ->order(['Bids.id'=> 'desc']);
+        $bidderscount = $bidders->count();
         $this->set(compact('bidders'));
+        $this->set('bidderscount',$bidderscount);
     }
 }
 ?>
