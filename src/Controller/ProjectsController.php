@@ -64,12 +64,23 @@ class ProjectsController extends AppController
             'order' => array('projects.id' => 'desc')))->contain(['Users','Skills','Bids']));
         $this->set(compact('projects'));
 
+        $joinedprojects = $this->Projects->find('all')->select([
+            'id','slug','short_title','status','created','user_id'
+        ]);
+        $joinedprojects->matching('Bids',function ($q) {
+            return $q->where(['Bids.user_id' => $this->Auth->user('id')])
+                    ->where(['Bids.status' => 'Accepted']);
+        });
+        $this->set(compact('joinedprojects'));
         $options = array(
             'conditions' => array('projects.user_id' => $this->Auth->user('id')),
             'order' => array('projects.id' => 'desc')
         );
         $this->loadComponent('Paginator');
-        $myprojects = $this->Paginator->paginate($this->Projects->find('all',$options));
+        $myprojects = $this->Projects->find('all',$options)->select([
+            'id','slug','short_title','status','created','user_id'
+        ]);
+        $myprojects->union($joinedprojects);
         $this->set(compact('myprojects'));
 
         $query  = $this->Projects->find('all',array(

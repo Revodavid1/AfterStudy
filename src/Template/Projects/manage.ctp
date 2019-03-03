@@ -1,4 +1,5 @@
 <?php echo $this->element('navextend');?>
+
 <div id="members" class="col s12 l2 m2">
     <div class="row">
         <div class="col s12 l12 m12"> 
@@ -99,6 +100,12 @@
                     <div class="collapsible-body"><span>
                         <ul class="collection">
                             <li class="collection-item"><?=$thisproject->user->fullname?></li>
+                            <?php foreach ($bidders as $projectmembers): ?>
+                                <?php if ($projectmembers->status ==  'Accepted'): ?>
+                                    <li class="collection-item">
+                                        <?=$projectmembers->user->fullname?></li>
+                                <?php endif ?>
+                             <?php endforeach?>
                         </ul>
                     </span>
                     </div>
@@ -184,7 +191,7 @@
                                     'action' => 'rejectbid',$bidders->id],['class'=>'btn-small red white-text'])?>
                                 <?php endif?>
                                 <?php if($bidders->status == 'Ignored'):?>
-                                    <?= $this->Form->button('Accepted',
+                                    <?= $this->Form->button('Ignored',
                                      ['class'=>'btn-small black white-text disabled'])
                                     ?>
                                 <?php else:?>
