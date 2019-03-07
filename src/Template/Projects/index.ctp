@@ -161,7 +161,7 @@
                 </div>
             </div>
             <div class="col s12 m9 l9">
-                <div class="card white z-depth-2">
+                <div class="card white">
                     <div class="card-content">
                         <table class="responsive-table">
                             <thead>
@@ -174,10 +174,10 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($myprojects as $myprojects): ?>
-                                    <tr class="z-depth-1">
+                                    <tr>
                                         <td>
                                             <?= $this->Html->link($myprojects->short_title, 
-                                            ['action' => 'manage',$myprojects->id]) ?>
+                                            ['action' => 'projectmode',$myprojects->id_alias]) ?>
                                             <?php if ($myprojects->user_id != $this->Session->read('Auth.User.id')):
                                             ?>
                                                 <div class="blue-grey darken-4 white-text chip z-depth-2"
@@ -196,6 +196,16 @@
                                             <?= $this->Html->Link($this->Html->tag('i','edit', 
                                                 array('class'=>'material-icons')),array('action' => 'edit', 
                                                 $myprojects->slug),array('escape' => false));?>
+                                            <?= $this->Html->Link($this->Html->tag('i','people', 
+                                                array('class'=>'material-icons black-text')),
+                                                array('action' => 'members',$myprojects->id_alias),
+                                                array('escape' => false));
+                                            ?>
+                                            <?= $this->Html->Link($this->Html->tag('i','view_list', 
+                                                array('class'=>'material-icons black-text')),
+                                                array('action' => 'members',$myprojects->id_alias),
+                                                array('escape' => false));
+                                            ?>
                                             <i class="material-icons red-text">delete</i>
                                         </td>
                                     </tr>
@@ -211,7 +221,7 @@
         <div class="row">
             <div class="col s0 m1 l1"></div>
             <div class="col s12 m10 l10">
-                <div class="card white z-depth-2">
+                <div class="card white">
                     <div class="card-content">
                         <table class="responsive-table">
                             <thead>
@@ -225,7 +235,7 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($projectrequests as $projectrequests): ?>
-                                <tr class="z-depth-1">
+                                <tr>
                                     <td>
                                         <?= $projectrequests->short_title ?>
                                     </td>

@@ -1,4 +1,3 @@
-<?php echo $this->element('navextend');?>
 
 <div id="members" class="col s12 l2 m2">
     <div class="row">
@@ -199,6 +198,9 @@
                                         <?= $this->Form->PostLink('Ignore',['controller'=>'bids',
                                         'action' => 'ignorebid',$bidders->id],['class'=>'btn-small brown white-text'])?>
                                     <?php endif?> 
+                                    <?= $this->Form->PostLink('Request More Details',['controller'=>'',
+                                        'action' => ''],['class'=>'btn-small blue white-text'])
+                                    ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -217,6 +219,3 @@
         </div>
     </div>
 </div>
-
-
-<div id="tasks" class="col s12">Test 2</div>

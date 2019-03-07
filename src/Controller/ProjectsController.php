@@ -8,6 +8,7 @@ use Cake\Event\Event;
 use Cake\ORM;
 use Cake\ORM\ResultSet;
 use  Cake\ORM\Table;
+use Cake\Datasource\ConnectionManager;
 
 class ProjectsController extends AppController
 {
@@ -65,22 +66,30 @@ class ProjectsController extends AppController
         $this->set(compact('projects'));
 
         $joinedprojects = $this->Projects->find('all')->select([
-            'id','slug','short_title','status','created','user_id'
-        ]);
+            'id_alias'=>'projects.id','slug'=>'projects.slug','short_title'=>'projects.short_title',
+            'status'=>'projects.status','created'=>'projects.created',
+            'user_id'=>'projects.user_id'
+        ])->order(['projects.id'=> 'desc']);
         $joinedprojects->matching('Bids',function ($q) {
             return $q->where(['Bids.user_id' => $this->Auth->user('id')])
-                    ->where(['Bids.status' => 'Accepted']);
+                    ->where(['Bids.status' => 'Accepted'])
+                    ->order(['Projects.id'=> 'desc']);
         });
-        $this->set(compact('joinedprojects'));
         $options = array(
-            'conditions' => array('projects.user_id' => $this->Auth->user('id')),
-            'order' => array('projects.id' => 'desc')
+            'conditions' => array('projects.user_id' => $this->Auth->user('id'))
         );
         $this->loadComponent('Paginator');
-        $myprojects = $this->Projects->find('all',$options)->select([
-            'id','slug','short_title','status','created','user_id'
-        ]);
-        $myprojects->union($joinedprojects);
+        $myprojectsall = $this->Projects->find('all',$options)->select([
+            'id_alias'=>'projects.id','slug'=>'projects.slug','short_title'=>'projects.short_title',
+            'status'=>'projects.status','created'=>'projects.created',
+            'user_id'=>'projects.user_id'
+        ])->order(['projects.id'=> 'desc']);
+        $connection = ConnectionManager::get('default');
+        $myprojects = $myprojectsall->union($joinedprojects)->epilog(
+            $connection
+                ->newQuery()
+                ->order(['id_alias' => 'desc'])
+        );
         $this->set(compact('myprojects'));
 
         $query  = $this->Projects->find('all',array(
@@ -103,15 +112,35 @@ class ProjectsController extends AppController
         if ($this->request->getParam('action') === 'index' || 
             $this->request->getParam('action') === 'add' ||
             $this->request->getParam('action') === 'edit'||
-            $this->request->getParam('action') === 'manage'||
+            $this->request->getParam('action') === 'members'||
+            $this->request->getParam('action') === 'projectmode'||
             $this->request->getParam('action') === 'request'  ) {
             return true;
         }
         return parent::isAuthorized($user);
     }
-    public function manage($id = null)
+    public function members($id = null)
     {
         $this->layout='validuser';
+        if (!$id) {
+            throw new NotFoundException(__('Invalid Project'));
+        }
+        $thisproject = $this->Projects->findById($id)->contain(['Users','Bids','Skills']);
+        if (!$thisproject) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+        $this->set('thisproject', $thisproject);
+
+        $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
+        ->order(['Bids.id'=> 'desc']);
+        $bidderscount = $bidders->count();
+        $this->set(compact('bidders'));
+        $this->set('bidderscount',$bidderscount);
+    }
+    public function projectmode($id = null)
+    {
+        $this->layout='projectview';
+        $this->set('id',$id);
         if (!$id) {
             throw new NotFoundException(__('Invalid Project'));
         }
