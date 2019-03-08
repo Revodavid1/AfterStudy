@@ -1,5 +1,5 @@
 <!-- Modal Structure -->
-<div id="projectmodal" class="modal white">
+<div id="taskgroupmodal" class="modal white">
     <div class="modal-content">
         <div class="center">
             <?= $this->Flash->render() ?>

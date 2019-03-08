@@ -26,7 +26,7 @@ class TasksTable extends Table
         ]);
         $this->addAssociations([
             'belongsTo' => [
-                'Taskgroups' => ['className' => 'App\Model\Table\Taskgroups']
+                'Taskgroups' => ['className' => 'App\Model\Table\TaskgroupsTable']
             ],
             'hasOne' => ['Taskgroup']
         ]);

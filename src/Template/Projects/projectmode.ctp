@@ -23,9 +23,11 @@
             <p>Create or view stand-alone tasks or tasks belonging to a Task Group.</p>
             </div>
             <div class="card-action">
-            <a href="#">Create</a>
-            <a href="#">All Tasks</a>
-            <a href="#">My Tasks</a>
+                <?= $this->Html->link('Create', 
+                    ['controller'=>'Tasks','action' => 'add',$id]) 
+                ?>
+                <a href="#">All Tasks</a>
+                <a href="#">My Tasks</a>
             </div>
         </div>
     </div>

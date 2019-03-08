@@ -12,6 +12,7 @@ class TaskgroupsTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+        $this->hasMany('Tasks');
         $this->addAssociations([
             'belongsTo' => [
                 'Users' => ['className' => 'App\Model\Table\UsersTable']

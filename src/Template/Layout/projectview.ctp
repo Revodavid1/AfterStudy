@@ -102,6 +102,8 @@
             $('.modal').modal({dismissible:false});
             //$('.modal').modal();
             $('#projectmodal').modal('open');
+            $('#tasksmodal').modal('open');
+            $('#taskgroupmodal').modal('open');
             $('#addskillsmodal').modal();
             $('.tabs').tabs();
             $('.datepicker').datepicker({format:'yyyy-mm-dd'});
