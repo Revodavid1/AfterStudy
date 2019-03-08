@@ -3,15 +3,15 @@
     <div class="col s12 m6 l6">
         <div class="card white">
             <div class="card-content blue-grey-text">
-                <span class="card-title">Use Cases</span>
-                <p>Define Use Cases here. Create a use case before creating tasks.</p>
+                <span class="card-title">Task Groups</span>
+                <p>Task Groups are used to classify similar tasks or tasks belonging to a unit.</p>
             </div>
             <div class="card-action">
                 <?= $this->Html->link('Create', 
-                    ['controller'=>'Usecases','action' => 'add',$id]) 
+                    ['controller'=>'Taskgroups','action' => 'add',$id]) 
                 ?>
-                <?= $this->Html->link('View Use Cases', 
-                    ['controller'=>'Usecases','action' => 'index',$id]) 
+                <?= $this->Html->link('View Task Groups', 
+                    ['controller'=>'Taskgroups','action' => 'index',$id]) 
                 ?>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="card white">
             <div class="card-content blue-grey-text">
             <span class="card-title">Tasks</span>
-            <p>Create Tasks associated with a use case and assign task to a user.</p>
+            <p>Create or view stand-alone tasks or tasks belonging to a Task Group.</p>
             </div>
             <div class="card-action">
             <a href="#">Create</a>

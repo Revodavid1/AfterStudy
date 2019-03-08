@@ -1,4 +1,4 @@
-<!-- File: src/Template/Usecases/index.ctp -->
+<!-- File: src/Template/Taskgroups/index.ctp -->
 <div class="row">
     <div class="col s12">
         <div class="row">
@@ -8,7 +8,7 @@
                     <div class="card-content">
                         <span class="card-title">
                             <?= $this->Html->link('Create Use Case',
-                            ['controller'=>'Usecases','action' => 'add',$id], 
+                            ['controller'=>'Taskgroups','action' => 'add',$id], 
                             ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small z-depth-5']
                             );?>
                         </span>
@@ -27,19 +27,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($projects_usecases as $projects_usecases): ?>
+                                <?php foreach ($projects_taskgroups as $projects_taskgroups): ?>
                                     <tr>
                                         <td>
-                                            <?= $this->Html->link($projects_usecases->title, 
-                                            ['action' => 'projectmode',$projects_usecases->id]) ?>
+                                            <?= $this->Html->link($projects_taskgroups->title, 
+                                            ['action' => 'view',$projects_taskgroups->project_id,
+                                            $projects_taskgroups->id]) ?>
                                         </td>
                                         <td>
-                                            <?= $projects_usecases->created->i18nFormat('MM/dd/yyyy'); ?>
+                                            <?= $projects_taskgroups->created->i18nFormat('MM/dd/yyyy'); ?>
                                         </td>
                                         <td>
                                             <?= $this->Html->Link($this->Html->tag('i','edit', 
                                                 array('class'=>'material-icons')),array('action' => 'edit', 
-                                                $projects_usecases->id),array('escape' => false));?>
+                                                $projects_taskgroups->id),array('escape' => false));?>
                                             <i class="material-icons red-text">delete</i>
                                         </td>
                                     </tr>

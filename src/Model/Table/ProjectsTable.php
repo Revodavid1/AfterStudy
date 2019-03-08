@@ -22,7 +22,7 @@ class ProjectsTable extends Table
         $this->addBehavior('Timestamp');
         $this->belongsToMany('Skills',['joinTable' => 'projects_skills','dependent' => true]);
         $this->hasMany('Bids');
-        $this->hasMany('Usecases');
+        $this->hasMany('Taskgroups');
         $this->addAssociations([
             'belongsTo' => [
                 'Users' => ['className' => 'App\Model\Table\UsersTable']

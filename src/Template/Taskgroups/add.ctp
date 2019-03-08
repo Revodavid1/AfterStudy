@@ -4,8 +4,8 @@
         <div class="center">
             <?= $this->Flash->render() ?>
         </div>
-        <h4>Add New Use Case</h4>
-        <?= $this->Form->create($newusecase)?>
+        <h4>Add New Task Group</h4>
+        <?= $this->Form->create($newtaskgroup)?>
         <div class="row">
             <div class="input-field col s12">
                 <?= $this->Form->control(('title'),array('maxlength'=>'50'),['type' => 'text']);?>

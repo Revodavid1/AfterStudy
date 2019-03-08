@@ -1,5 +1,5 @@
 <?php
-// src/Model/Table/UsecasesTable.php
+// src/Model/Table/tasksTable.php
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -7,7 +7,7 @@ use Cake\Validation\Validator;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 
-class UsecasesTable extends Table
+class TasksTable extends Table
 {
     public function initialize(array $config)
     {
@@ -23,6 +23,12 @@ class UsecasesTable extends Table
                 'Projects' => ['className' => 'App\Model\Table\ProjectsTable']
             ],
             'hasOne' => ['Project']
+        ]);
+        $this->addAssociations([
+            'belongsTo' => [
+                'Taskgroups' => ['className' => 'App\Model\Table\Taskgroups']
+            ],
+            'hasOne' => ['Taskgroup']
         ]);
     }
 }

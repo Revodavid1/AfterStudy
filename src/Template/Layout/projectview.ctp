@@ -63,7 +63,7 @@
                     <li>
                         <?= $this->Html->Link(
                             $this->Html->tag('i','dashboard', array('class'=>'material-icons')),
-                            array('controller'=>'users','action' => 'dashboard'),array('escape' => false)
+                            array('controller'=>'projects','action' => 'projectmode',$id),array('escape' => false)
                         );?>
                     </li>
                     <li class="white-text" escape="false"><a href="#">
