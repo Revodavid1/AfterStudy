@@ -32,7 +32,7 @@ $allmembers[$this->Session->read('Auth.User.id')] = 'Myself';
         </div>
         <div class="row">
             <div  class="col s6">
-                <?= $this->Form->input('taskgroups_id', array('type'=>'select','options'=>$alltasksgroups,
+                <?= $this->Form->input('taskgroup_id', array('type'=>'select','options'=>$alltasksgroups,
                 'empty' => 'None','class'=>'browser-default','label'=>'Add to Task Group:'));
                 ?>    
             </div>
@@ -46,7 +46,7 @@ $allmembers[$this->Session->read('Auth.User.id')] = 'Myself';
     <div class="modal-footer blue-grey">
         <?= $this->Form->button(('Submit'),['class' => 'green waves-effect waves-light btn-flat white-text'],
             ['type' => 'submit'])?>
-        <?= $this->Html->link('Cancel',$this->request->referer(), ['class'=>'red darken-4 waves-effect waves-light 
+        <?= $this->Html->link('Cancel',['action' => 'index',$id], ['class'=>'red darken-4 waves-effect waves-light 
                 btn-small']
         );?>
     </div>

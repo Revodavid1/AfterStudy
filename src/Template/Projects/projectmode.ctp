@@ -26,8 +26,15 @@
                 <?= $this->Html->link('Create', 
                     ['controller'=>'Tasks','action' => 'add',$id]) 
                 ?>
-                <a href="#">All Tasks</a>
-                <a href="#">My Tasks</a>
+                <?= $this->Html->link('All Tasks', 
+                    ['controller'=>'Tasks','action' => 'all',$id]) 
+                ?>
+                <?= $this->Html->link('Assigned to Me', 
+                    ['controller'=>'Tasks','action' => 'index',$id]) 
+                ?>
+                <?= $this->Html->link('Created by Me', 
+                    ['controller'=>'Tasks','action' => 'index',$id]) 
+                ?>
             </div>
         </div>
     </div>

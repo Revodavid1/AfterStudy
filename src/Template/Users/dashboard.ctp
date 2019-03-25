@@ -123,11 +123,6 @@
     </div>
 </div>
 
-<!--<p>My Birthday: 
-<?= $this->Session->read('Auth.User.dob')->i18nFormat('MM/dd');?>
-</p>-->
-
-
 <!-- Modal Structure -->
 <div id="addskillsmodal" class="modal white">
     <div class="modal-content">

@@ -99,8 +99,9 @@
     <script>
         $(document).ready(function(){
             $('.sidenav').sidenav();
-            $('.modal').modal({dismissible:false});
-            //$('.modal').modal();
+            $('.modal').modal();
+            $('#tasksmodal').modal({dismissible:false});
+            $('#taskgroupmodal').modal({dismissible:false});
             $('#projectmodal').modal('open');
             $('#tasksmodal').modal('open');
             $('#taskgroupmodal').modal('open');

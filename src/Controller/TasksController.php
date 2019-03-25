@@ -15,11 +15,11 @@ class TasksController extends AppController
         $newtask = $this->Tasks->newEntity();
         if ($this->request->is('post')) {
             $newtask = $this->Tasks->patchEntity($newtask, $this->request->getData());
-            $newtask->status = 'new';
+            $newtask->status = 'New';
             $newtask->project_id = $project_id;
             $newtask->created_by = $this->Auth->user('id');
             if ($this->Tasks->save($newtask)) {
-                return $this->redirect($this->request->referer());
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Unable to add your new task.'));
         }
@@ -43,6 +43,27 @@ class TasksController extends AppController
         $alltasksgroups = $alltasksgroups->toArray();
         $this->set('alltasksgroups',$alltasksgroups);
     }
+    public function all($project_id){
+        $this->layout= 'projectview';
+        $this->set('id',$project_id); 
+        $this->loadComponent('Paginator');
+        $projects_alltasks = $this->Paginator->paginate($this->Tasks->find('all')
+        ->contain(['Assignees'=>['fields'=>['fullname','id']],'Taskgroups',
+        'Creators' =>['fields'=>['fullname','id']]])
+        ->where(['tasks.project_id' => $project_id]));
+        $this->set(compact('projects_alltasks'));
+    }
+    public function index($project_id){
+        $this->layout= 'projectview';
+        $this->set('id',$project_id); 
+        $this->loadComponent('Paginator');
+        $projects_tasks = $this->Paginator->paginate($this->Tasks->find('all')
+        ->contain(['Assignees'=>['fields'=>['fullname','id']],'Taskgroups',
+                    'Creators' =>['fields'=>['fullname','id']]])
+        ->where(['tasks.project_id' => $project_id])
+        ->where(['tasks.assigned_to' =>$this->Auth->user('id')]));
+        $this->set(compact('projects_tasks'));
+    }
     public function initialize()
     {
         parent::initialize();
@@ -52,7 +73,9 @@ class TasksController extends AppController
         
     }
     public function isAuthorized($user) {
-        if ($this->request->getParam('action') === 'add' ) {
+        if ($this->request->getParam('action') === 'add'||
+            $this->request->getParam('action') === 'index'||
+            $this->request->getParam('action') === 'all' ) {
             return true;
         }
         return parent::isAuthorized($user);
