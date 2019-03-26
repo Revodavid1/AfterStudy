@@ -7,7 +7,7 @@
                 <div class="card white z-depth-2">
                     <div class="card-content">
                         <span class="card-title">
-                            <?= $this->Html->link('Create Tasks',
+                            <?= $this->Html->link('Create Task',
                             ['controller'=>'Tasks','action' => 'add',$id], 
                             ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small z-depth-5']
                             );?>

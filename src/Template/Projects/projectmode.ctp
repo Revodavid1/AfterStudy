@@ -33,7 +33,7 @@
                     ['controller'=>'Tasks','action' => 'index',$id]) 
                 ?>
                 <?= $this->Html->link('Created by Me', 
-                    ['controller'=>'Tasks','action' => 'index',$id]) 
+                    ['controller'=>'Tasks','action' => 'createdlist',$id]) 
                 ?>
             </div>
         </div>

@@ -66,11 +66,7 @@
                             array('controller'=>'projects','action' => 'projectmode',$id),array('escape' => false)
                         );?>
                     </li>
-                    <li class="white-text" escape="false"><a href="#">
-                        </span><i class="material-icons">face</i></a><span>
-                    </li>
                     <li><a href="#"><i class="material-icons">notifications</i></a></li>
-                    <li><a href="#"><i class="material-icons">settings</i></a></li>
                     <li>
                         <?= $this->Html->Link(
                             $this->Html->tag('i','exit_to_app', array('class'=>'material-icons')),
