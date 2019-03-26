@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 class TasksController extends AppController
 {
@@ -53,6 +54,16 @@ class TasksController extends AppController
         ->where(['tasks.project_id' => $project_id]));
         $this->set(compact('projects_alltasks'));
     }
+    public function edit($project_id,$task_id,$status)
+    {
+        $tasksTable = TableRegistry::get('Tasks');
+        $currentTask = $tasksTable->get($task_id);
+        $currentTask->status = $status;
+
+        if ($tasksTable->save($currentTask)) {
+            return $this->redirect(['action' => 'index',$project_id]);
+        }
+    }
     public function index($project_id){
         $this->layout= 'projectview';
         $this->set('id',$project_id); 
@@ -75,7 +86,8 @@ class TasksController extends AppController
     public function isAuthorized($user) {
         if ($this->request->getParam('action') === 'add'||
             $this->request->getParam('action') === 'index'||
-            $this->request->getParam('action') === 'all' ) {
+            $this->request->getParam('action') === 'all'||
+            $this->request->getParam('action') === 'edit' ) {
             return true;
         }
         return parent::isAuthorized($user);

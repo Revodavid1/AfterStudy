@@ -18,6 +18,7 @@
             <div class="col s12 m9 l9">
                 <div class="card white">
                     <div class="card-content">
+                        <span class="card-title">All Tasks</span>
                         <table class="responsive-table">
                             <thead>
                                 <tr>
@@ -35,11 +36,9 @@
                                 <?php foreach ($projects_alltasks as $projects_alltasks): ?>
                                     <tr>
                                         <td>
-                                            <?= $this->Html->link($projects_alltasks->title, 
-                                            ['action' => 'view',$projects_alltasks->project_id,
-                                            $projects_alltasks->id]) ?>
-                                            <a class="orange waves-effect waves-light btn-small modal-trigger circle" 
-                            href="#<?=$projects_alltasks->id?>">Edit</a>
+                                            <a class="btn-flat blue-text modal-trigger"
+                                                href="#<?=$projects_alltasks->id?>"><?=$projects_alltasks->title?>
+                                            </a>
                                         </td>
                                         <td>
                                             <?= $projects_alltasks->taskgroup['title']; ?>
@@ -63,16 +62,19 @@
                                             <?= $projects_alltasks->assignee['fullname']; ?>
                                         </td>
                                     </tr>
-
-                                    
                                     <!-- Modal Structure -->
                                     <div id="<?=$projects_alltasks->id;?>" class="modal white">
                                         <div class="modal-content">
-                                            <h4>Modal Header</h4>
-                                            <?= $projects_alltasks->assignee['fullname']; ?>
+                                            <h4><?= $projects_alltasks->title; ?></h4>
+                                            <p>Description:<?= $projects_alltasks->description; ?>
+                                            <p>Status:<?= $projects_alltasks->status; ?>
+                                            <hr/>
+                                            <p>Created by: <?= $projects_alltasks->creator['fullname']; ?>
+                                            <p>Assigned to: <?= $projects_alltasks->assignee['fullname']; ?>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                            <a href="#!" class="red modal-close waves-effect white-text btn-flat">
+                                            Close</a>
                                         </div>
                                     </div>
                                     <!-- Modal Structure -->
