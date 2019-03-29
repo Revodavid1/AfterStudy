@@ -73,12 +73,12 @@
                 <li class="collection-item"><div>Projects Created <span class="chip black badge white-text">
                     <?=$myprojectcount?></span></div>
                 </li>
-                <li class="collection-item"><div>Requests to join 
+                <li class="collection-item"><div>Requests I made 
                     <span class="chip orange badge white-text"><?=$requestedprojectcount?></span>
                     </div>
                 </li>
                 <li class="collection-item"><div>Requests to join me
-                    <span class="chip orange badge white-text">0</span>
+                    <span class="chip orange badge white-text">0 </span>
                     </div>
                 </li>
                 <li class="collection-item"><div>0 your request accepted<a href="#!" class="secondary-content">

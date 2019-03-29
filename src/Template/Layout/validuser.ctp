@@ -95,10 +95,18 @@
                     );?>
             </div>
         </li>
+        <li class="collection-item">
+            <div><i class="material-icons">group</i>
+                <?= $this->Html->Link(
+                        'Groups',
+                        array('controller'=>'groups','action' => 'index'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
             <i class="material-icons">live_help</i> QA Forum</a></div></li>
-        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">person_add</i> Groups</a></div></li>
     </ul>
     <ul id="sidenavout" class="sidenav collection hide-on-med-and-up" 
         style="width:200px;margin-top: 60px;">
@@ -115,10 +123,18 @@
                     );?>
             </div>
         </li>
+        <li class="collection-item">
+            <div><i class="material-icons">group</i>
+                <?= $this->Html->Link(
+                        'Groups',
+                        array('controller'=>'groups','action' => 'index'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
         <li class="collection-item"><div><a href="#!" class="blue-grey-text">
             <i class="material-icons">live_help</i> QA Forum</a></div></li>
-        <li class="collection-item"><div><a href="#!" class="blue-grey-text">
-            <i class="material-icons">person_add</i> Groups</a></div></li>
     </ul>
 
 

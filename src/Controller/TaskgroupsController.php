@@ -18,7 +18,7 @@ class TaskgroupsController extends AppController
             $newtaskgroup->project_id = $project_id;
             $newtaskgroup->created_by = $this->Auth->user('id');
             if ($this->Taskgroups->save($newtaskgroup)) {
-                return $this->redirect($this->request->referer());
+                return $this->redirect(['action' => 'index',$project_id]);
             }
             $this->Flash->error(__('Unable to add your use case.'));
         }

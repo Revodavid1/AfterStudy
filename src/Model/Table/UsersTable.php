@@ -12,6 +12,7 @@ class UsersTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->hasMany('Projects');
+        $this->hasMany('Groups');
         $this->hasMany('Bids'); 
         $this->hasMany('Taskgroups'); 
         $this->belongsToMany('Skills',['joinTable' => 'users_skills','dependent' => true]);

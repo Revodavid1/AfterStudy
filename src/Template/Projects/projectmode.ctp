@@ -65,6 +65,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <ul class="col s12 collection">
+                <p>Coming Soon</p>
+            </ul>
         </div> 
     </div>
 </div>

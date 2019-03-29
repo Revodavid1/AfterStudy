@@ -54,6 +54,16 @@ class UsersController extends AppController
         $requestedprojectcount = $requestedquery->count();
         $this->set('requestedprojectcount', $requestedprojectcount);
 
+        /*$joinmerequests = $this->Users->Projects->find('all')->select([
+            'id_project'=>'projects.id','bid_id'=>'bids.project_id'
+        ])->where(['Projects.user_id' => $this->Auth->user('id')]);
+        $joinmerequests->matching('Bids',function ($q) {
+            return $q->where(['Bids.project_id' =>'Projects.id']);
+        });
+        $joinmerequestscount = $joinmerequests->count();
+        $this->set('joinmerequestscount', $joinmerequestscount);
+
+        */
         $skillsadd = $this->Users->findById($this->Auth->user('id'))->contain(['Skills'])->firstOrFail();
         if ($this->request->is(['post', 'put'])) {
             $this->Users->patchEntity($skillsadd, $this->request->getData());
