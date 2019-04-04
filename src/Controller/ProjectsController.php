@@ -37,6 +37,21 @@ class ProjectsController extends AppController
         ]);
         $this->set(compact('allskills'));
 
+        $mygroups = $this->Projects->Groups->find('list',[
+            'keyField' => 'id',
+            'valueField' => 'title',
+            'order' => 'Groups.id ASC'
+        ])->where(['owner' => $this->Auth->user('id')]);;
+        $mygroups = $mygroups->toArray();
+        $this->set(compact('mygroups'));
+        /*$alltasksgroups = $this->Tasks->Taskgroups->find('list',[
+            'keyField' => 'id',
+            'valueField' => 'title',
+            'order' => 'title'])
+            ->where(['project_id' => $project_id]);
+        $alltasksgroups = $alltasksgroups->toArray();
+        $this->set('alltasksgroups',$alltasksgroups);*/
+
     }
     public function edit($slug)
     {
@@ -62,7 +77,9 @@ class ProjectsController extends AppController
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
         $projects = $this->Paginator->paginate($this->Projects->find('all',array(
-            'order' => array('projects.id' => 'desc')))->contain(['Users','Skills','Bids']));
+            'order' => array('projects.id' => 'desc')))
+            ->contain(['Users','Skills','Bids'])
+            ->where(['Projects.privacy' => 'All']));
         $this->set(compact('projects'));
 
         $joinedprojects = $this->Projects->find('all')->select([
@@ -76,7 +93,8 @@ class ProjectsController extends AppController
                     ->order(['Projects.id'=> 'desc']);
         });
         $options = array(
-            'conditions' => array('projects.user_id' => $this->Auth->user('id'))
+            'conditions' => array(array('projects.user_id' => $this->Auth->user('id')),
+                            array('projects.privacy !=' => 'Group'))
         );
         $this->loadComponent('Paginator');
         $myprojectsall = $this->Projects->find('all',$options)->select([

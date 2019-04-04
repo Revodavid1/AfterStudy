@@ -46,6 +46,7 @@
         <div class="col s12 l8 m8"> 
             <?php foreach ($allgroups as $allgroups): ?>
                 <?php $group_id = $allgroups->id; ?>
+                <?php $owner = $allgroups->owner; ?>
                 <div class="card white z-depth-2 col s6">
                     <div class="card-content black-grey-text">
                         <span class="card-title tooltipped" 
@@ -58,7 +59,7 @@
                         </p>
                         <div class="card-action">
                             <?= $this->Html->link('Details', 
-                                ['action' => 'groupdetails', $group_id])
+                                ['action' => 'groupdetails', $group_id,$owner])
                             ?>
                         </div>
                     </div>    

@@ -4,8 +4,8 @@
         <div class="center">
             <?= $this->Flash->render() ?>
         </div>
-        <h4>Create a New Project</h4>
-        <?= $this->Form->create($project)?>
+        <h4>Create New Group Project</h4>
+        <?= $this->Form->create($groupproject)?>
         <div class="row">
             <div class="input-field col s12">
                 <?= $this->Form->control(('short_title'),array('maxlength'=>'50'),['type' => 'text']);?>
@@ -46,49 +46,14 @@
                         'Last Day to Apply')); ?>
             </div>
         </div>
+    
         <div class="row">
-            <div class="input-field col s12">
-                <?= $this->form->control('collaborators', array('type'=>'number',
-                    'label'=>'How many people do you want to colloborate with you on this project?',
-                    'value'=>'0')); ?>
-            </div>
-        </div>
-        <div class="row">
-            <?= $this->form->label('Select skills of collaborators (Hold ctrl to select muliple)');?>
-        </div>
-        <div class="row">
-                <div  class="col s6">
-                    <input type="text" id="skillInput" onkeyup="filterSkills()" placeholder="Filter skills list..">
-                </div>
-            <div class="col s6">
-                <?= $this->Form->input('skills._ids', array('type'=>'select','options'=>$allskills,
-                'multiple' => true, 'size'=>10,'class'=>'browser-default', 'style'=>'height:auto',
-                'label'=>false,'id'=>'skillsid')
-                );?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6 center browser-default">
-                <?= $this->Form->input('privacy', array('type' => 'select','id'=>'privacy', 
-                    'class'=>'browser-default','options'=>
-                        ['All' => 'Share to All', 'Private'=>'Only Me Can See This Project'
-                        , 'Group'=>'Share to a Group'],
-                    'empty' => '(choose one)','onchange'=>"showSelect('mygroups', this)"),
-                );?>
-            </div>
             <div class="col s6 center browser-default">
                 <?= $this->Form->input('want_sponsors', array('type' => 'select', 
                     'class'=>'browser-default','options'=>
                         ['Yes' => 'Yes', 'No' => 'No'],
                     'empty' => '(choose one)',
                     'label'=>'Want this Project to be searchable by external sponsors?'),
-                );?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                <?= $this->Form->input('group_id', array('type'=>'select','options'=>$mygroups,
-                'class'=>'browser-default', 'label'=>false,'id'=>'mygroups','style'=>'display:none;')
                 );?>
             </div>
         </div>

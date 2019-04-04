@@ -29,5 +29,11 @@ class ProjectsTable extends Table
             ],
             'hasOne' => ['User']
         ]);
+        $this->addAssociations([
+            'belongsTo' => [
+                'Groups' => ['className' => 'App\Model\Table\GroupsTable']
+            ],
+            'hasOne' => ['Group']
+        ]);
     }
 }

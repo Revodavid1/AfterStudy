@@ -11,6 +11,7 @@ class GroupsTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+        $this->hasMany('Projects');
         $this->belongsToMany('Users',['joinTable' => 'groups_users','dependent' => true]);
         $this->addAssociations([
             'belongsTo' => [

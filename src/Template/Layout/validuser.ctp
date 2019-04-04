@@ -45,6 +45,7 @@
             font-size: 16px;
             border-bottom: 1px solid #ddd;
         }
+        #mygroups { display: none; }
         
     </style>
 </head>
@@ -167,6 +168,25 @@
                 }
             }
         }
+        function filterUsers() {
+            var input, filter, select, option, a, i, txtValue;
+            input = document.getElementById('userInput');
+            filter = input.value.toUpperCase();
+            select = document.getElementById("usersid");
+            option = select.getElementsByTagName('option');
+            for (i = 0; i < option.length; i++) {
+                txtValue = option[i].textContent || option[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    option[i].style.display = "";
+                } else {
+                    option[i].style.display = "none";
+                }
+            }
+        }
+        function showSelect(privacy,mygroups){
+            document.getElementById(privacy).style.display = mygroups.value == "Group" ? 'block' : 'none';
+        }
+        
     </script>
     
     <main>
