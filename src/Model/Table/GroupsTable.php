@@ -11,9 +11,10 @@ class GroupsTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+        $this->belongsToMany('Users',['joinTable' => 'groups_users','dependent' => true]);
         $this->addAssociations([
             'belongsTo' => [
-                'Users' => ['className' => 'App\Model\Table\UsersTable','foreignKey'=>'owner']
+                'Admins' => ['className' => 'App\Model\Table\UsersTable','foreignKey'=>'owner']
             ],
             'hasOne' => ['User']
         ]);

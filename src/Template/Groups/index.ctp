@@ -54,7 +54,7 @@
                             <?= $allgroups->title?></span>
                         <hr/>
                         <p class="brown-text"> 
-                            Owner: <?= $allgroups->user['fullname']?>
+                            Owner: <?= $allgroups->admin['fullname']?>
                         </p>
                         <div class="card-action">
                             <?= $this->Html->link('Details', 

@@ -40,7 +40,7 @@
                         <span>
                             <table class="responsive-table">
                                 <tbody>
-                                <?php foreach ($skillsadd->skills as $myskills): ?>
+                                <?php foreach ($skillsadd->skills as $myskills):?>
                                     <tr class="z-depth-1">
                                         <td><?=$myskills->skill_title?></td>
                                     </tr>

@@ -15,7 +15,7 @@ class GroupsController extends AppController
     public function groupdetails($groupid) 
     {
         $this->layout= 'validuser'; 
-        $thisgroup = $this->Groups->findById($groupid)->contain(['Users'])->firstOrFail();
+        $thisgroup = $this->Groups->findById($groupid)->contain(['Admins'])->firstOrFail();
         if ($this->request->is(['post', 'put'])) {
             $this->Groups->patchEntity($thisgroup, $this->request->getData());
             if ($this->Groups->save($thisgroup)) {
@@ -25,6 +25,15 @@ class GroupsController extends AppController
             $this->Flash->error(__('Unable to update your group title.'));
         }
         $this->set('thisgroup', $thisgroup);
+
+        $thisgroupMembers = $this->Groups->findById($groupid)->contain(['Admins','Users']);
+                /*look into restricting returned fields, currently throwing error
+                ->contain(['Users'=> [
+                    'fields' => [
+                        'id',
+                        'fullname']]
+                    ]);*/
+        $this->set('thisgroupMembers', $thisgroupMembers);
     }
 
     public function index() 
@@ -46,7 +55,7 @@ class GroupsController extends AppController
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
         $allgroups = $this->Paginator->paginate($this->Groups->find('all',array(
-            'order' => array('groups.id' => 'desc')))->contain(['Users'=>['fields'=>['fullname','id']]]));
+            'order' => array('groups.id' => 'desc')))->contain(['Admins'=>['fields'=>['fullname','id']]]));
         $this->set(compact('allgroups'));
     }
 
