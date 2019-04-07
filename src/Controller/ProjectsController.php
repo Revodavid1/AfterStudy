@@ -41,17 +41,9 @@ class ProjectsController extends AppController
             'keyField' => 'id',
             'valueField' => 'title',
             'order' => 'Groups.id ASC'
-        ])->where(['owner' => $this->Auth->user('id')]);;
+        ])->where(['owner' => $this->Auth->user('id')]);
         $mygroups = $mygroups->toArray();
         $this->set(compact('mygroups'));
-        /*$alltasksgroups = $this->Tasks->Taskgroups->find('list',[
-            'keyField' => 'id',
-            'valueField' => 'title',
-            'order' => 'title'])
-            ->where(['project_id' => $project_id]);
-        $alltasksgroups = $alltasksgroups->toArray();
-        $this->set('alltasksgroups',$alltasksgroups);*/
-
     }
     public function edit($slug)
     {

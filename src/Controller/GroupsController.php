@@ -97,9 +97,20 @@ class GroupsController extends AppController
 
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
-        $allgroups = $this->Paginator->paginate($this->Groups->find('all',array(
-            'order' => array('groups.id' => 'desc')))->contain(['Admins'=>['fields'=>['fullname','id']]]));
-        $this->set(compact('allgroups'));
+        $ownedgroups = $this->Groups->find('all',array(
+            'order' => array('groups.id' => 'desc')))
+            ->where(['owner' => $this->Auth->user('id')])
+            ->contain(['Admins'=>['fields'=>['fullname','id']]]);
+        $groupsIBelong = $this->Groups->find()->contain(['Admins'=>['fields'=>['fullname','id']]]);
+        $groupsIBelong->leftJoinWith('Users')
+        ->where(['Users.id' => $this->Auth->user('id')]);
+        $connection = ConnectionManager::get('default');
+        $allgroups = $ownedgroups->union($groupsIBelong)->epilog(
+            $connection
+                ->newQuery()
+        );
+
+        $this->set('allgroups',$allgroups);
     }
 
     public function initialize()

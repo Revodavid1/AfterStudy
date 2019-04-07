@@ -34,7 +34,7 @@
         </li>
     </ul>
 </div>
-<h3>All Groups</h3>
+<h3>My Groups</h3>
 <hr/>
 <div class="col s12">
     <div class="row">
@@ -46,15 +46,24 @@
         <div class="col s12 l8 m8"> 
             <?php foreach ($allgroups as $allgroups): ?>
                 <?php $group_id = $allgroups->id; ?>
-                <?php $owner = $allgroups->owner; ?>
-                <div class="card white z-depth-2 col s6">
-                    <div class="card-content black-grey-text">
+                <?php $owner = $allgroups->owner; 
+                    if($allgroups->admin['id'] ==  $this->Session->read('Auth.User.id')){
+                        echo'<div class="card white z-depth-2 col s6">
+                            <div class="card-content black-grey-text">';
+                    }
+                    else{
+                        echo '<div class="card blue-grey z-depth-2 col s6">
+                        <div class="card-content white-text">';
+                    }
+                ?>
+
+                
                         <span class="card-title tooltipped" 
                             style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
                             data-position='bottom' data-tooltip='<?= $allgroups->title?>'>
                             <?= $allgroups->title?></span>
                         <hr/>
-                        <p class="brown-text"> 
+                        <p> 
                             Owner: <?= $allgroups->admin['fullname']?>
                         </p>
                         <div class="card-action">
