@@ -5,42 +5,24 @@
         {
             array_push($selected,$value['id']);
         }  
-    }
-                                    
+    }                     
 ?>
+<div class="card white" style="margin-top:5px">
 <div class="center">
     <?= $this->Flash->render() ?>
 </div>
-<div class="row" >
-    <table class="responsive-table">
-        <tbody>
-            <?= $this->Form->create($thisgroup)?>
-            <tr>
-                <td class="col s12 m10 l10">
-                    <div class="input-field">
-                        <?= $this->Form->control(('title'),array('maxlength'=>'255'),
-                        ['type' => 'text']);?>
-                    </div>
-                </td>
-                <td class="col s12 m2 l2">
-                    <div class="input-field">
-                        <?= $this->Form->button(('Update Title'),['class' => 'green waves-effect waves-light 
-                        btn-flat white-text'],['type' => 'submit'])?>
-                    </div>
-                </td>
-            </tr>
-            <?= $this->Form->end() ?>
-            <tr>
-                <td>
-                    <a class="blue-grey waves-effect waves-light btn-small circle" 
-                        href="#">Request to Join Group</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="row" style="margin:5px">
+    <?= $this->Form->create($thisgroup)?>
+        <div class="input-field">
+            <?= $this->Form->control(('title'),array('maxlength'=>'255'),
+            ['type' => 'text']);?>
+                <?= $this->Form->button(('Update Title'),['class' => 'green waves-effect waves-light 
+            btn-flat white-text'],['type' => 'submit'])?>
+        </div>
+        <?= $this->Form->end() ?>
 </div>
 
-<div class = "row">
+<div class = "row" style="margin:2px">
     <div class = "col s12 m4 l4">
         <ul class="collapsible with-header">
             <li>
@@ -95,7 +77,8 @@
                             <tr>
                                 <td>
                                     <?= $this->Html->link($groupsprojects->short_title, 
-                                    ['action' => 'projectmode',$groupsprojects->id_alias]) ?>
+                                    ['controller'=>'projects',
+                                    'action' => 'projectmode',$groupsprojects->id_alias]) ?>
                                 </td>
                                 <td>
                                     <?= $groupsprojects->status; ?>
@@ -109,7 +92,8 @@
                                         $groupsprojects->slug),array('escape' => false));?>
                                     <?= $this->Html->Link($this->Html->tag('i','people', 
                                         array('class'=>'material-icons black-text')),
-                                        array('action' => 'members',$groupsprojects->id_alias),
+                                        array('controller'=>'projects','action' => 'members',
+                                                $groupsprojects->id_alias),
                                         array('escape' => false));
                                     ?>
                                     <?= $this->Html->Link($this->Html->tag('i','view_list', 
@@ -127,7 +111,7 @@
         </div>       
     </div>
 </div>
-
+</div>
 <!-- Modal Structure -->
 <div id="addmembersmodal" class="modal white">
     <div class="modal-content">

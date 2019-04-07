@@ -49,12 +49,6 @@ class GroupsController extends AppController
         $this->set('thisgroup', $thisgroup);
 
         $thisgroupMembers = $this->Groups->findById($groupid)->contain(['Admins','Users']);
-                /*look into restricting returned fields, currently throwing error
-                ->contain(['Users'=> [
-                    'fields' => [
-                        'id',
-                        'fullname']]
-                    ]);*/
         if ($this->request->is(['post', 'put'])) {
             $this->Groups->patchEntity($thisgroupMembers, $this->request->getData());
             if ($this->Groups->save($thisgroupMembers)) {
@@ -65,6 +59,7 @@ class GroupsController extends AppController
         }
         $this->set('thisgroupMembers', $thisgroupMembers);
 
+        //rename, this is for listing who to add to the group from all users, minus the owner
         $allusers = $this->Groups->Users->find('list',[
             'keyField' => 'id',
             'valueField' => 'fullname',

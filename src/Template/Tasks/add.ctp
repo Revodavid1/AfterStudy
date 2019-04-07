@@ -1,5 +1,5 @@
 <?php
-$allmembers[$this->Session->read('Auth.User.id')] = 'Myself';
+    $allmembers[$this->Session->read('Auth.User.id')] = 'Myself';
 ?>
 <!-- Modal Structure -->
 <div id="tasksmodal" class="modal white">

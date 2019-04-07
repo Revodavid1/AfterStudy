@@ -26,6 +26,7 @@ class TasksController extends AppController
         }
         $this->set('newtask', $newtask);
 
+        //gets individual project members
         $allmembers = $this->Tasks->Projects->Bids->find('list',[
             'keyField' => 'user_id',
             'valueField' => 'user.fullname',
@@ -34,8 +35,42 @@ class TasksController extends AppController
             ->where(['Bids.project_id' => $project_id])
             ->where(['Bids.status' => 'Accepted']);
         $allmembers = $allmembers->toArray();
+        //add project owner to memberlist
+        $individualprojectowner = $this->Tasks->Projects->findById($project_id)
+            ->select(['Projects.user_id'])    
+            ->contain(['Users'=> [
+                'fields' => [
+                    'id',
+                    'fullname']]]);
+        $individualprojectowner = $individualprojectowner->toArray();
+        foreach ($individualprojectowner as $individualprojectowner){
+            $allmembers[$individualprojectowner->user->id]=$individualprojectowner->user->fullname;
+        } 
+        //end -- add project owner to memberlist
         $this->set('allmembers',$allmembers);
+        //end -- gets individual project members
+        
+        $thisprojectgroup = $this->Tasks->Projects->findById($project_id)
+            ->select(['Projects.group_id']);
+        $thisprojectgroup = $thisprojectgroup->toArray();
+        foreach($thisprojectgroup as $thisprojectgroup){
+            $thisgroup =  $thisprojectgroup->group_id;
+        }
 
+        if(!empty($thisgroup)){
+            //gets project group members
+            $thisgroupMembers = $this->Tasks->Projects->Groups->findById($thisgroup)->contain(['Admins','Users']);
+            $groupMembersList= [];
+            foreach ($thisgroupMembers as $thisgroupMember){
+                $groupMembersList[$thisgroupMember->admin['id']] = $thisgroupMember->admin['fullname'];
+            }
+            foreach ($thisgroupMember->users as $othermembers){
+                $groupMembersList[$othermembers['id']] = $othermembers['fullname'];
+            }      
+            //end -- gets project group members            
+            $this->set('allmembers', $groupMembersList);
+        }
+        
         $alltasksgroups = $this->Tasks->Taskgroups->find('list',[
             'keyField' => 'id',
             'valueField' => 'title',
