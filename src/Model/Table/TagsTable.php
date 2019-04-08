@@ -64,7 +64,8 @@ class TagsTable extends Table
             ->scalar('title')
             ->maxLength('title', 191)
             ->allowEmptyString('title')
-            ->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table',
+                                                'message'    => 'Tag Already Exists']);
 
         return $validator;
     }

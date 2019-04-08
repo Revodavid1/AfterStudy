@@ -48,6 +48,7 @@ class TagsController extends AppController
      */
     public function add()
     {
+        $this->layout= 'validuser'; 
         $tag = $this->Tags->newEntity();
         if ($this->request->is('post')) {
             $tag = $this->Tags->patchEntity($tag, $this->request->getData());
@@ -58,8 +59,8 @@ class TagsController extends AppController
             }
             $this->Flash->error(__('The tag could not be saved. Please, try again.'));
         }
-        $questions = $this->Tags->Questions->find('list', ['limit' => 200]);
-        $this->set(compact('tag', 'questions'));
+        //$questions = $this->Tags->Questions->find('list', ['limit' => 200]);
+        $this->set(compact('tag'));
     }
 
     /**
