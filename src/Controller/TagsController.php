@@ -20,6 +20,7 @@ class TagsController extends AppController
      */
     public function index()
     {
+        $this->layout= 'validuser'; 
         $tags = $this->paginate($this->Tags);
 
         $this->set(compact('tags'));
@@ -59,57 +60,14 @@ class TagsController extends AppController
             }
             $this->Flash->error(__('The tag could not be saved. Please, try again.'));
         }
-        //$questions = $this->Tags->Questions->find('list', ['limit' => 200]);
         $this->set(compact('tag'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Tag id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $tag = $this->Tags->get($id, [
-            'contain' => ['Questions']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $tag = $this->Tags->patchEntity($tag, $this->request->getData());
-            if ($this->Tags->save($tag)) {
-                $this->Flash->success(__('The tag has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The tag could not be saved. Please, try again.'));
-        }
-        $questions = $this->Tags->Questions->find('list', ['limit' => 200]);
-        $this->set(compact('tag', 'questions'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Tag id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $tag = $this->Tags->get($id);
-        if ($this->Tags->delete($tag)) {
-            $this->Flash->success(__('The tag has been deleted.'));
-        } else {
-            $this->Flash->error(__('The tag could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
     public function isAuthorized($user) {
         if ($this->request->getParam('action') === 'index' ||
-            $this->request->getParam('action') === 'add' ) {
+            $this->request->getParam('action') === 'add'
+            ||
+            $this->request->getParam('action') === 'view' ) {
             return true;
         }
         return parent::isAuthorized($user);

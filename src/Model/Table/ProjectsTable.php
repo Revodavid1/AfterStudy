@@ -23,6 +23,7 @@ class ProjectsTable extends Table
         $this->belongsToMany('Skills',['joinTable' => 'projects_skills','dependent' => true]);
         $this->hasMany('Bids');
         $this->hasMany('Taskgroups');
+        $this->hasMany('Questions');
         $this->addAssociations([
             'belongsTo' => [
                 'Users' => ['className' => 'App\Model\Table\UsersTable']

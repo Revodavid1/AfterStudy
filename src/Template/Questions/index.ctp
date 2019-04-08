@@ -6,7 +6,7 @@
     <?= $this->Html->link('Ask a Question','/questions/add', 
         ['class'=>'waves-effect waves-light btn-small blue-grey']);
     ?>
-    <?= $this->Html->link('Create Tag','/questions/add', 
+    <?= $this->Html->link('Create Tag','/tags/add', 
         ['class'=>'waves-effect waves-light btn-small blue-grey']);
     ?>
 </div>

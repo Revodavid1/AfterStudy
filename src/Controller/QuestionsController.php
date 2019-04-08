@@ -15,61 +15,60 @@ class QuestionsController extends AppController
     public function add()
     {
         $this->layout= 'validuser'; 
-        /*$project = $this->Projects->newEntity();
+        $question = $this->Questions->newEntity();
         if ($this->request->is('post')) {
-            $project = $this->Projects->patchEntity($project, $this->request->getData());
-
-            $project->user_id = $this->Auth->user('id');
-            $project->status = 'Open';
-            if ($this->Projects->save($project)) {
-                //change redirect to my project to general view
+            $question = $this->Questions->patchEntity($question, $this->request->getData());
+            $question->user_id = $this->Auth->user('id');
+            $question->openclose = 'opened';
+            $question->answered = 0;
+            if ($this->Questions->save($question)) {
+                $this->Flash->success(__('Your Question has been saved.'));
+                //change to my question list
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to add your project.'));
+            $this->Flash->error(__('Unable to add your question.'));
         }
-        $this->set('project', $project);
+        $this->set('question', $question); 
+        $tags = $this->Questions->Tags->find('list');
+        $this->set('tags', $tags); 
 
-
-        $allskills = $this->Projects->Skills->find('list',[
+        $mycreatedprojects = $this->Questions->Projects->find('list',[
             'keyField' => 'id',
-            'valueField' => 'skill_title',
-            'order' => 'Skills.id ASC'
-        ]);
-        $this->set(compact('allskills'));
+            'valueField' => 'short_title',
+            'order' => 'Projects.id ASC'
+        ])->where(['Projects.user_id' =>$this->Auth->user('id')]);
+        $mycreatedprojects = $mycreatedprojects->toArray();
+        $this->set('mycreatedprojects',$mycreatedprojects);
 
-        $mygroups = $this->Projects->Groups->find('list',[
-            'keyField' => 'id',
-            'valueField' => 'title',
-            'order' => 'Groups.id ASC'
-        ])->where(['owner' => $this->Auth->user('id')]);
-        $mygroups = $mygroups->toArray();
-        $this->set(compact('mygroups'));*/
+        $myjoinedprojects = $this->Questions->Projects->Bids->find('list',[
+            'keyField' => 'project_id',
+            'valueField' => 'project.short_title',
+            'order' => 'project_id ASC'
+        ])->contain(['Projects'])->where(['Bids.status' => 'Accepted']);
+        $myjoinedprojects->leftJoinWith('Users')->where(['Users.id' => $this->Auth->user('id')]);
+        $myjoinedprojects = $myjoinedprojects->toArray();
+
+        $mygroupsandprojects = $this->Questions->Projects->Groups->find()->contain(['Projects']);
+        $mygroupsandprojects->leftJoinWith('Users')->where(['Users.id' => $this->Auth->user('id')]);
+        foreach($mygroupsandprojects as $mygroupsandproject){
+            foreach($mygroupsandproject->projects as $groupproject){
+                $projectlist[$groupproject->id] = $groupproject->short_title;
+            }
+        }
+        $allmyprojects = $mycreatedprojects + $myjoinedprojects + $projectlist;
+        asort($allmyprojects);
+        $this->set('myprojects', $allmyprojects); 
     }
     public function edit($slug)
     {
         $this->layout= 'validuser'; 
-        $project = $this->Projects->findBySlug($slug)->contain(['Skills'])->firstOrFail();
-        if ($this->request->is(['post', 'put'])) {
-            $this->Projects->patchEntity($project, $this->request->getData());
-            if ($this->Projects->save($project)) {
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('Unable to update your project.'));
-        }
-        $allskills = $this->Projects->Skills->find('list',[
-            'keyField' => 'id',
-            'valueField' => 'skill_title',
-            'order' => 'Skills.id ASC'
-        ]);
-        $this->set(compact('allskills'));
-        $this->set('project', $project);
+        
     }
     public function index() 
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
         
-         
     }
 
     public function initialize()
