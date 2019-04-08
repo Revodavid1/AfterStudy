@@ -167,6 +167,7 @@
             $('.tooltipped').tooltip();
             $('select').formSelect();
             $('.collapsible').collapsible();
+            $('input#title').characterCounter();
         });
 
         function filterSkills() {

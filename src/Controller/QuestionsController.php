@@ -15,7 +15,7 @@ class QuestionsController extends AppController
     public function add()
     {
         $this->layout= 'validuser'; 
-        $project = $this->Projects->newEntity();
+        /*$project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
 
@@ -43,7 +43,7 @@ class QuestionsController extends AppController
             'order' => 'Groups.id ASC'
         ])->where(['owner' => $this->Auth->user('id')]);
         $mygroups = $mygroups->toArray();
-        $this->set(compact('mygroups'));
+        $this->set(compact('mygroups'));*/
     }
     public function edit($slug)
     {
@@ -68,46 +68,8 @@ class QuestionsController extends AppController
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
-        $projects = $this->Paginator->paginate($this->Projects->find('all',array(
-            'order' => array('projects.id' => 'desc')))
-            ->contain(['Users','Skills','Bids'])
-            ->where(['Projects.privacy' => 'All']));
-        $this->set(compact('projects'));
-
-        $joinedprojects = $this->Projects->find('all')->select([
-            'id_alias'=>'projects.id','slug'=>'projects.slug','short_title'=>'projects.short_title',
-            'status'=>'projects.status','created'=>'projects.created',
-            'user_id'=>'projects.user_id'
-        ])->order(['projects.id'=> 'desc']);
-        $joinedprojects->matching('Bids',function ($q) {
-            return $q->where(['Bids.user_id' => $this->Auth->user('id')])
-                    ->where(['Bids.status' => 'Accepted'])
-                    ->order(['Projects.id'=> 'desc']);
-        });
-        $options = array(
-            'conditions' => array(array('projects.user_id' => $this->Auth->user('id')),
-                            array('projects.privacy !=' => 'Group'))
-        );
-        $this->loadComponent('Paginator');
-        $myprojectsall = $this->Projects->find('all',$options)->select([
-            'id_alias'=>'projects.id','slug'=>'projects.slug','short_title'=>'projects.short_title',
-            'status'=>'projects.status','created'=>'projects.created',
-            'user_id'=>'projects.user_id'
-        ])->order(['projects.id'=> 'desc']);
-        $connection = ConnectionManager::get('default');
-        $myprojects = $myprojectsall->union($joinedprojects)->epilog(
-            $connection
-                ->newQuery()
-                ->order(['id_alias' => 'desc'])
-        );
-        $this->set(compact('myprojects'));
-
-        $query  = $this->Projects->find('all',array(
-            'order' => array('Bids.created' => 'desc')))->contain(['Users']);
-        $query ->matching('Bids',function ($q) {
-            return $q->where(['Bids.user_id' => $this->Auth->user('id')]);
-        });
-        $this->set('projectrequests',$query);
+        
+         
     }
 
     public function initialize()
@@ -119,7 +81,8 @@ class QuestionsController extends AppController
         
     }
     public function isAuthorized($user) {
-        if ($this->request->getParam('action') === 'index' ) {
+        if ($this->request->getParam('action') === 'index' ||
+            $this->request->getParam('action') === 'add' ) {
             return true;
         }
         return parent::isAuthorized($user);
