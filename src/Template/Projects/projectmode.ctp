@@ -1,10 +1,10 @@
 <div class="row"></div>
 <div class="row" style="margin-left:0.5px;margin-right:0.5px;">
-    <div class="col s12 m6 l6">
+    <div class="col s12 m4 l4">
         <div class="card white">
             <div class="card-content blue-grey-text">
                 <span class="card-title">Task Groups</span>
-                <p>Task Groups are used to classify similar tasks or tasks belonging to a unit.</p>
+                <p>Task Groups are used to classify similar tasks.</p>
             </div>
             <div class="card-action">
                 <?= $this->Html->link('Create', 
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="col s12 m6 l6">
+    <div class="col s12 m5 l5">
         <div class="card white">
             <div class="card-content blue-grey-text">
             <span class="card-title">Tasks</span>
@@ -34,6 +34,22 @@
                 ?>
                 <?= $this->Html->link('Created by Me', 
                     ['controller'=>'Tasks','action' => 'createdlist',$id]) 
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m3 l3">
+        <div class="card white">
+            <div class="card-content blue-grey-text">
+            <span class="card-title">Work Notes</span>
+            <p>Create or view worknotes.</p>
+            </div>
+            <div class="card-action">
+                <?= $this->Html->link('Create Note', 
+                    ['controller'=>'Tasks','action' => 'add',$id]) 
+                ?>
+                <?= $this->Html->link('All Notes', 
+                    ['controller'=>'Tasks','action' => 'all',$id]) 
                 ?>
             </div>
         </div>
