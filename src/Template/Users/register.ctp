@@ -61,49 +61,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s12">
                             <div class="col s2">
                                 <i class="material-icons prefix">vpn_key</i>
                             </div>
                             <div class="col s10">
                                 <?= $this->Form->control(('password'),['type' => 'password'])?>
-                            </div>
-                        </div>
-                        <div class="input-field col s6">
-                            <?= $this->form->control('dob',array('class'=>'datepicker','type'=>'text','label'=>
-                                'Date of Birth')); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s6 center">
-                            <?= $this->Form->input('residential_status', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>
-                                ['In-State' => 'In-State','Out-of-State' => 'Out-of-State',
-                                'International' => 'International'],
-                                'empty' => '(choose one)'),
-                            );?>
-                        </div>
-                        <div class="col s6 center">
-                            <?= $this->Form->input('country_origin', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>
-                                ['USA' => 'USA','Nigeria' => 'Nigeria','India' => 'India'],
-                                'empty' => '(choose one)','label'=>'Country of Origin'),
-                            );?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s6 center">
-                            <?= $this->Form->input('state_resident', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>
-                                ['NH' => 'NH','MA' => 'MA','TX' => 'TX'],'empty' => '(choose one)'),
-                            );?>
-                        </div>
-                        <div class="col s6">
-                            <div class="col s2">
-                                <i class="material-icons prefix">location_on</i>
-                            </div>
-                            <div class="col s10">
-                                <?= $this->Form->control(('zip_code'),['type' => 'text']);?>
                             </div>
                         </div>
                     </div>

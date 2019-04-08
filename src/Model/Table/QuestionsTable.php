@@ -1,5 +1,5 @@
 <?php
-// src/Model/Table/ProjectsTable.php
+// src/Model/Table/QuestionsTable.php
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -7,7 +7,7 @@ use Cake\Validation\Validator;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 
-class ProjectsTable extends Table
+class QuestionsTable extends Table
 {
     public function beforeSave($event, $entity, $options)
     {
@@ -20,20 +20,11 @@ class ProjectsTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
-        $this->belongsToMany('Skills',['joinTable' => 'projects_skills','dependent' => true]);
-        $this->hasMany('Bids');
-        $this->hasMany('Taskgroups');
         $this->addAssociations([
             'belongsTo' => [
                 'Users' => ['className' => 'App\Model\Table\UsersTable']
             ],
             'hasOne' => ['User']
-        ]);
-        $this->addAssociations([
-            'belongsTo' => [
-                'Groups' => ['className' => 'App\Model\Table\GroupsTable']
-            ],
-            'hasOne' => ['Group']
         ]);
     }
 }

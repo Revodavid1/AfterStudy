@@ -18,13 +18,6 @@
                     <?= $this->Session->read('Auth.User.class_standing');?> Student 
                     </h2></span>
                 </div>
-                <div class="col s10"><i class="material-icons">public</i>
-                    <span><h2 style="margin-bottom: 2px; margin-top: 4px;font-size:1.0rem;line-height: 
-                    1.33333;font-weight:400;display: inline;"><?= $this->Session->read('Auth.User.state_resident');?>
-                    Resident From
-                        <?= $this->Session->read('Auth.User.country_origin');?>
-                    </h2></span>
-                </div>
             </div>
         </div>
         <div class="row" >
@@ -78,22 +71,22 @@
                     </div>
                 </li>
                 <li class="collection-item"><div>Requests to join me
-                    <span class="chip orange badge white-text">0 </span>
+                    <span class="chip orange badge white-text">- </span>
                     </div>
                 </li>
-                <li class="collection-item"><div>0 your request accepted<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>- your request accepted<a href="#!" class="secondary-content">
                     <i class="material-icons avatar green circle white-text tooltipped"
                     data-position="bottom" data-tooltip="View accepted requests">check</i></a></div></li>
-                <li class="collection-item"><div>0 your request rejected<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>- your request rejected<a href="#!" class="secondary-content">
                     <i class="material-icons avatar red circle white-text tooltipped"
                     data-position="bottom" data-tooltip="View rejected requests">highlight_off</i></a></div></li>
-                <li class="collection-item"><div>0 collaborated with<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>- collaborated with<a href="#!" class="secondary-content">
                     <i class="material-icons avatar white  black-text tooltipped"
                     data-position="bottom" data-tooltip="See Requests to Collaborate">people</i></a></div></li>
-                <li class="collection-item"><div>0 completed<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>- completed<a href="#!" class="secondary-content">
                     <i class="material-icons avatar green circle white-text tooltipped"
                     data-position="bottom" data-tooltip="View Completed Projects">event_available</i></a></div></li>
-                <li class="collection-item"><div>0 Average Rating<a href="#!" class="secondary-content">
+                <li class="collection-item"><div>- Average Rating<a href="#!" class="secondary-content">
                     <i class="material-icons avatar amber-text white tooltipped"
                     data-position="bottom" data-tooltip="See Project Ratings">star</i></a></div></li>
             </ul>
@@ -115,11 +108,56 @@
             <div class="col s12">
                 <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
-                        <span class="card-title">Groups</span>
+                        <span class="card-title">Groups<?= $this->Html->Link($this->Html->tag('i','add', 
+                                array('class'=>'material-icons avatar black circle white-text tooltipped',
+                                'data-position'=>'bottom','data-tooltip'=>'Add a Group')),
+                                array('controller'=>'groups','action' => 'index'),
+                                array('class'=>'secondary-content','escape' => false)
+                        );?></span>
                     </div>
                 </div>
             </div>
         </div> 
+        <div class="row">
+            <ul class="col s12 collection">
+                <li class="collection-item"><div>Groups Created <span class="chip black badge white-text">
+                    <?=$mygroupcount?></div>
+                </li>
+                <li class="collection-item"><div>Other Groups Joined
+                    <span class="chip orange badge white-text"> - </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Group Project Created
+                    <span class="chip orange badge white-text"> - </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Other Groups Joined
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>TaskGroups Created
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Group Tasks Created
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Assigned to Me
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Completed
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Group Ratings
+                    <span class="chip orange badge white-text">- </span>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
     </div>
 </div>
 

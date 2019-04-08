@@ -42,6 +42,7 @@ class UsersController extends AppController
         $this->layout = 'validuser';
         $logged_in_user = $this->Auth->user('fullname'); 
 
+        //project count
         $query = $this->Users->find()->innerJoinWith('Projects')
         ->select(['Users.id', 'Projects.User_id'])
         ->where(['Projects.User_id' =>$this->Auth->user('id')]);
@@ -53,17 +54,14 @@ class UsersController extends AppController
         ->where(['Bids.user_id' =>$this->Auth->user('id')]);
         $requestedprojectcount = $requestedquery->count();
         $this->set('requestedprojectcount', $requestedprojectcount);
+        
+        //group count
+        $query = $this->Users->find()->innerJoinWith('Groups')
+        ->select(['Users.id', 'Groups.owner'])
+        ->where(['Groups.owner' => $this->Auth->user('id')]);
+        $mygroupcount = $query->count();
+        $this->set('mygroupcount', $mygroupcount);
 
-        /*$joinmerequests = $this->Users->Projects->find('all')->select([
-            'id_project'=>'projects.id','bid_id'=>'bids.project_id'
-        ])->where(['Projects.user_id' => $this->Auth->user('id')]);
-        $joinmerequests->matching('Bids',function ($q) {
-            return $q->where(['Bids.project_id' =>'Projects.id']);
-        });
-        $joinmerequestscount = $joinmerequests->count();
-        $this->set('joinmerequestscount', $joinmerequestscount);
-
-        */
         $skillsadd = $this->Users->findById($this->Auth->user('id'))->contain(['Skills'])->firstOrFail();
         if ($this->request->is(['post', 'put'])) {
             $this->Users->patchEntity($skillsadd, $this->request->getData());
