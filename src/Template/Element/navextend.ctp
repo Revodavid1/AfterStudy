@@ -7,8 +7,18 @@
                 array('class'=>'whitetext','escape' => false));
             ?>
         </li>
-        <li><a href="questions">My Questions</a></li>
-        <li><a href="questions">My Answers</a></li>
+        <li>
+            <?= $this->Html->Link('My Questions',
+                array('controller'=>'questions','action' => 'myquestions'),
+                array('class'=>'whitetext','escape' => false));
+            ?>
+        </li>
+        <li>
+            <?= $this->Html->Link('My Answers',
+                array('controller'=>'questions','action' => 'myanswers'),
+                array('class'=>'whitetext','escape' => false));
+            ?>
+        </li>
         <li>
             <?= $this->Html->Link('Tags',
                 array('controller'=>'tags','action' => 'index'),

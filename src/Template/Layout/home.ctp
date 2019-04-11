@@ -24,7 +24,7 @@
                 <?=$this->Html->image('afterstudy.png', array('height'=>'70px'));?>
             </div>
             <ul class="left">
-                <li><h5>AfterStudy</h5></li>
+                <li><h5>EasyTask</h5></li>
             </ul>
             <ul id="nav-mobile" class="right">
                 <?= $this->Html->Link('Register', ['action' => 'register']) ?>

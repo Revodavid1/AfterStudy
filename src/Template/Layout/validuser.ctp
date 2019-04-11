@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title class="">AfterStudy::User</title>
+    <title class="">EasyTask::User</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
     </script>
@@ -55,7 +55,7 @@
             <div class="nav-wrapper blue-grey darken-2" style="color:white;">
                 <a href="#" data-target="sidenavout" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="left hide-on-med-and-down">
-                    <li><h5>AfterStudy</h5></li>
+                    <li><h5>EasyTask</h5></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
                     <li class="white-text"><?= $this->Session->read('Auth.User.fullname');?>

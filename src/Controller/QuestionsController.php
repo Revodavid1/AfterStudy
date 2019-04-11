@@ -90,10 +90,12 @@ class QuestionsController extends AppController
         
     }
     public function isAuthorized($user) {
-        if ($this->request->getParam('action') === 'index' ||
-            $this->request->getParam('action') === 'add'||
-            $this->request->getParam('action') === 'view'
-            ||$this->request->getParam('action') === 'markCorrect' ) {
+        if ($this->request->getParam('action') === 'index' 
+            ||$this->request->getParam('action') === 'add'
+            ||$this->request->getParam('action') === 'view'
+            ||$this->request->getParam('action') === 'markcorrect' 
+            ||$this->request->getParam('action') === 'myquestions' 
+            ||$this->request->getParam('action') === 'myanswers' ) {
             return true;
         }
         return parent::isAuthorized($user);
@@ -113,6 +115,19 @@ class QuestionsController extends AppController
                 }
             } 
         }
+    }
+    public function myanswers(){
+        $this->layout= 'validuser';
+        $myanswers = $this->Questions->Answers->findAllByUserId($this->Auth->user('id'))
+                    ->contain(['Questions','Users'=>['fields'=>['fullname','id']]]);
+        $this->set('myanswers',$myanswers);
+
+    }
+    public function myquestions(){
+        $this->layout= 'validuser';
+        $myquestions = $this->Questions->findAllByUserId($this->Auth->user('id'));
+        $this->set('myquestions',$myquestions);
+
     }
     public function view($questionid)
     {

@@ -5,7 +5,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content container">
-                <span class="card-title black-text center">Log in to AfterStudy</span>
+                <span class="card-title black-text center">Log in to EasyTask</span>
                 <?= $this->Form->create() ?>
                 <div class="row">
                     <div class="input-field col s12">

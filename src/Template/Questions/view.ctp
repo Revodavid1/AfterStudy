@@ -54,7 +54,7 @@
                         <p>Answered by: <?= $thisquestionanswers->user->fullname; ?></p>
                         <p>Date: <?= $thisquestionanswers->created; ?></p>
                         <?php if($thisquestion->user->id == $this->Session->read('Auth.User.id')
-                                || $thisquestion->answered === false){
+                                && $thisquestion->openclose != 'closed'){
                             echo $this->Form->PostLink('Mark Correct',['action' => 'markCorrect',
                                 $thisquestionanswers->id,$thisquestion->id],
                                 ['class'=>'btn-small green white-text']);
