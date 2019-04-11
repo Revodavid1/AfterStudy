@@ -21,7 +21,7 @@ class TagsController extends AppController
     public function index()
     {
         $this->layout= 'validuser'; 
-        $tags = $this->paginate($this->Tags);
+        $tags = $this->paginate($this->Tags->find()->contain(['Questions']));
 
         $this->set(compact('tags'));
     }
@@ -35,6 +35,7 @@ class TagsController extends AppController
      */
     public function view($id = null)
     {
+        $this->layout= 'validuser'; 
         $tag = $this->Tags->get($id, [
             'contain' => ['Questions']
         ]);
