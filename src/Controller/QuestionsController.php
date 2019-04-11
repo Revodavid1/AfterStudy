@@ -55,7 +55,14 @@ class QuestionsController extends AppController
                 $projectlist[$groupproject->id] = $groupproject->short_title;
             }
         }
-        $allmyprojects = $mycreatedprojects + $myjoinedprojects + $projectlist;
+        $mygroupsandprojectscount = $mygroupsandprojects->count();
+        if ($mygroupsandprojectscount == 0){
+            $allmyprojects = $mycreatedprojects + $myjoinedprojects;
+        }
+        else{
+            $allmyprojects = $mycreatedprojects + $myjoinedprojects + $projectlist;
+        }
+        
         asort($allmyprojects);
         $this->set('myprojects', $allmyprojects); 
     }
@@ -68,7 +75,10 @@ class QuestionsController extends AppController
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
-        
+        $recentquestions = $this->Questions->find()->limit(10)->order(['Questions.id'=>'DESC'])->contain(['Users'=>
+                                                                        ['fields'=>['fullname','id']]]
+                                                    );
+        $this->set('recentquestions', $recentquestions); 
     }
 
     public function initialize()
@@ -81,10 +91,58 @@ class QuestionsController extends AppController
     }
     public function isAuthorized($user) {
         if ($this->request->getParam('action') === 'index' ||
-            $this->request->getParam('action') === 'add' ) {
+            $this->request->getParam('action') === 'add'||
+            $this->request->getParam('action') === 'view'
+            ||$this->request->getParam('action') === 'markCorrect' ) {
             return true;
         }
         return parent::isAuthorized($user);
+    }
+    public function markcorrect($answerid,$questionid){
+        $correctanswer = $this->Questions->Answers->findById($answerid)->firstOrFail();
+        $markanswered = $this->Questions->findById($questionid)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Questions->Answers->patchEntity($correctanswer, $this->request->getData());
+            $this->Questions->patchEntity($markanswered, $this->request->getData());
+            $correctanswer->correctanswer = 1;
+            $markanswered->answered = 1;
+            $markanswered->openclose = 'closed';
+            if ($this->Questions->Answers->save($correctanswer)) {
+                if ($this->Questions->save($markanswered)) {
+                    return $this->redirect($this->request->referer());
+                }
+            } 
+        }
+    }
+    public function view($questionid)
+    {
+        $this->layout= 'validuser'; 
+        $questionid = $questionid;
+        $thisquestion = $this->Questions->findById($questionid)->contain(['Tags','Users'=>
+                                                                                ['fields'=>['fullname','id']]]);
+        $this->set('thisquestion',$thisquestion);  
+        $thisquestionanswers = $this->Questions->Answers->findByQuestionId($questionid)
+                                ->order(['Answers.correctanswer'=>'desc'])
+                                ->contain(['Users'=>['fields'=>['fullname','id']]]);
+        $this->set('thisquestionanswers',$thisquestionanswers);
+
+        $questionanswer = $this->Questions->Answers->newEntity();
+        if ($this->request->is('post')) {
+            $questionanswer = $this->Questions->Answers->patchEntity($questionanswer, 
+                                    $this->request->getData());
+            $questionanswer->user_id = $this->Auth->user('id');
+            $questionanswer->answer = $questionanswer->myanswer;
+            $questionanswer->question_id = $questionid;
+            if ($this->Questions->Answers->save($questionanswer)) {
+                $this->Flash->success(__('Your Answers has been saved.'));
+                //change to my question list
+                return $this->redirect(['action' => 'view',$questionid]);
+            }
+            $this->Flash->error(__('Unable to add your question.'));
+        }
+        $this->set('questionanswer',$questionanswer);
+
+    
     }
 }
 ?>

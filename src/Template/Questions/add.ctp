@@ -33,7 +33,7 @@
                         </div>
                         <div class="input-field col s12 l6 m6">
                             <?php echo $this->Form->control('project_id', array('options' => $myprojects,
-                            'empty' => _('Choose One'),'label'=>'Project Related'));?>
+                            'empty' => _('None'),'label'=>'Project Related'));?>
                         </div>
                     </div>
                 </div>
