@@ -46,17 +46,6 @@
                         'Last Day to Apply')); ?>
             </div>
         </div>
-    
-        <div class="row">
-            <div class="col s6 center browser-default">
-                <?= $this->Form->input('want_sponsors', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['Yes' => 'Yes', 'No' => 'No'],
-                    'empty' => '(choose one)',
-                    'label'=>'Want this Project to be searchable by external sponsors?'),
-                );?>
-            </div>
-        </div>
     </div>
     <div class="modal-footer blue-grey">
         <?= $this->Form->button(('Submit'),['class' => 'green waves-effect waves-light btn-flat white-text'],

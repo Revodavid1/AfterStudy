@@ -76,19 +76,9 @@
                     'empty' => '(choose one)','onchange'=>"showSelect('mygroups', this)"),
                 );?>
             </div>
-            <div class="col s6 center browser-default">
-                <?= $this->Form->input('want_sponsors', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['Yes' => 'Yes', 'No' => 'No'],
-                    'empty' => '(choose one)',
-                    'label'=>'Want this Project to be searchable by external sponsors?'),
-                );?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
+            <div class="col s6" id='mygroups'>
                 <?= $this->Form->input('group_id', array('type'=>'select','options'=>$mygroups,
-                'class'=>'browser-default', 'label'=>false,'id'=>'mygroups','style'=>'display:none;')
+                'class'=>'browser-default', 'label'=>'Group')
                 );?>
             </div>
         </div>

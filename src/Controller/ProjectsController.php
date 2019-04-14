@@ -45,6 +45,13 @@ class ProjectsController extends AppController
         $mygroups = $mygroups->toArray();
         $this->set(compact('mygroups'));
     }
+    public function questions($projectid)
+    {
+        $this->layout= 'projectview'; 
+        $this->set('id',$projectid); 
+        $projectquestions = $this->Projects->Questions->findAllByProjectId($projectid);
+        $this->set('projectquestions',$projectquestions);
+    }
     public function edit($slug)
     {
         $this->layout= 'validuser'; 
@@ -124,7 +131,8 @@ class ProjectsController extends AppController
             $this->request->getParam('action') === 'edit'||
             $this->request->getParam('action') === 'members'||
             $this->request->getParam('action') === 'projectmode'||
-            $this->request->getParam('action') === 'request'  ) {
+            $this->request->getParam('action') === 'request'||
+            $this->request->getParam('action') === 'questions'  ) {
             return true;
         }
         return parent::isAuthorized($user);

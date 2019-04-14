@@ -24,6 +24,7 @@ class ProjectsTable extends Table
         $this->hasMany('Bids');
         $this->hasMany('Taskgroups');
         $this->hasMany('Questions');
+        $this->hasMany('Notes');
         $this->addAssociations([
             'belongsTo' => [
                 'Users' => ['className' => 'App\Model\Table\UsersTable']

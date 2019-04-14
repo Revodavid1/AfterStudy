@@ -124,6 +124,9 @@
                 }
             }
         }
+        function noteTxt(thisnote) {
+            document.getElementById("displaynote").innerHTML = thisnote;
+        }
     </script>
     
     <main>

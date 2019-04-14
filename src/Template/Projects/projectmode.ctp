@@ -1,6 +1,6 @@
 <div class="row"></div>
 <div class="row" style="margin-left:0.5px;margin-right:0.5px;">
-    <div class="col s12 m4 l4">
+    <div class="col s12 m6 l6">
         <div class="card white">
             <div class="card-content blue-grey-text">
                 <span class="card-title">Task Groups</span>
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="col s12 m5 l5">
+    <div class="col s12 m6 l6">
         <div class="card white">
             <div class="card-content blue-grey-text">
             <span class="card-title">Tasks</span>
@@ -38,7 +38,9 @@
             </div>
         </div>
     </div>
-    <div class="col s12 m3 l3">
+</div>
+<div class="row" style="margin-left:0.5px;margin-right:0.5px;">
+    <div class="col s12 m6 l6">
         <div class="card white">
             <div class="card-content blue-grey-text">
             <span class="card-title">Work Notes</span>
@@ -46,10 +48,26 @@
             </div>
             <div class="card-action">
                 <?= $this->Html->link('Create Note', 
-                    ['controller'=>'Tasks','action' => 'add',$id]) 
+                    ['controller'=>'Notes','action' => 'add',$id]) 
                 ?>
                 <?= $this->Html->link('All Notes', 
-                    ['controller'=>'Tasks','action' => 'all',$id]) 
+                    ['controller'=>'Notes','action' => 'view',$id]) 
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6 l6">
+        <div class="card white">
+            <div class="card-content blue-grey-text">
+            <span class="card-title">Related Questions</span>
+            <p>Questions asked on QA Forum related to this project .</p>
+            </div>
+            <div class="card-action">
+                <?= $this->Html->link('View Questions', 
+                    ['action' => 'questions',$id]) 
+                ?>
+                <?= $this->Html->link('Ask A Question', 
+                    ['controller'=>'questions','action' => 'add']) 
                 ?>
             </div>
         </div>

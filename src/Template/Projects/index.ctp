@@ -26,8 +26,7 @@
                                             <img src="webroot\img\port.jpg" height="2" alt="" 
                                                 class=" circle responsive-img" style="width: 10%;">
                                                 <span style="margin-left:2px;font-weight:bold" class="black-grey-text"> 
-                                                    <?= $projects->user->fullname?>
-                                                    (<?= $projects->user->major?>)</span>
+                                                    <?= $projects->user->fullname?></span>
                                         </div>
                                         <div class="col s6">
                                             <h6 class="brown-text" style="text-transform: capitalize">

@@ -75,9 +75,10 @@ class QuestionsController extends AppController
     {
         $this->layout= 'validuser'; 
         $this->loadComponent('Paginator');
-        $recentquestions = $this->Questions->find()->limit(10)->order(['Questions.id'=>'DESC'])->contain(['Users'=>
-                                                                        ['fields'=>['fullname','id']]]
-                                                    );
+        $recentquestions = $this->Questions->find()
+                            ->limit(10)
+                            ->order(['Questions.id'=>'DESC'])
+                            ->contain(['Users'=>['fields'=>['fullname','id']]]);
         $this->set('recentquestions', $recentquestions); 
     }
 
@@ -133,8 +134,8 @@ class QuestionsController extends AppController
     {
         $this->layout= 'validuser'; 
         $questionid = $questionid;
-        $thisquestion = $this->Questions->findById($questionid)->contain(['Tags','Users'=>
-                                                                                ['fields'=>['fullname','id']]]);
+        $thisquestion = $this->Questions->findById($questionid)
+                        ->contain(['Projects','Tags','Users'=>['fields'=>['fullname','id']]]);
         $this->set('thisquestion',$thisquestion);  
         $thisquestionanswers = $this->Questions->Answers->findByQuestionId($questionid)
                                 ->order(['Answers.correctanswer'=>'desc'])

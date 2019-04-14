@@ -27,23 +27,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row center">
-                        <div class="col s6 browser-default">
-                            <?= $this->Form->input('major', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>
-                                    ['MSIT' => 'MSIT', 'CSE' => 'CSE', 'BIOTECH' => 'BIOTECH'],
-                                'empty' => '(choose one)'),
-                            );?>
-                        </div>
-                        <div class="col s6">
-                            <?= $this->Form->input('class_standing', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>
-                                    ['Freshman' => 'Freshman', 'Sophomore' => 'Sophomore', 
-                                    'Junior' => 'Junior','Senior' => 'Senior','Graduate' => 'Graduate'],
-                                'empty' => '(choose one)'),
-                            );?>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col s6">
                             <div class="col s2">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title class="">Welcome to AfterStudy</title>
+    <title class="">Welcome to EasyTasks</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
     </script>
@@ -24,7 +24,7 @@
                 <?=$this->Html->image('afterstudy.png', array('height'=>'70px'));?>
             </div>
             <ul class="left">
-                <li><h5>EasyTask</h5></li>
+                <li><h5>EasyTasks</h5></li>
             </ul>
             <ul id="nav-mobile" class="right">
                 <?= $this->Html->Link('Register', ['action' => 'register']) ?>
@@ -75,7 +75,7 @@
     background-color:black;color:white;">
     <div class="footer-copyright">
         <div class="container">
-            © 2019 OffCampus
+            © 2019 EasyTasks
         </div>
     </div>
 </footer>

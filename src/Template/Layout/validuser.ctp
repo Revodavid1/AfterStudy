@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title class="">EasyTask::User</title>
+    <title class="">EasyTasks::User</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
     </script>
@@ -55,7 +55,7 @@
             <div class="nav-wrapper blue-grey darken-2" style="color:white;">
                 <a href="#" data-target="sidenavout" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="left hide-on-med-and-down">
-                    <li><h5>EasyTask</h5></li>
+                    <li><h5>EasyTasks</h5></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
                     <li class="white-text"><?= $this->Session->read('Auth.User.fullname');?>
@@ -65,9 +65,6 @@
                             $this->Html->tag('i','dashboard', array('class'=>'material-icons')),
                             array('controller'=>'users','action' => 'dashboard'),array('escape' => false)
                         );?>
-                    </li>
-                    <li class="white-text" escape="false"><a href="#">
-                        </span><i class="material-icons">face</i></a><span>
                     </li>
                     <li><a href="#"><i class="material-icons">notifications</i></a></li>
                     <li><a href="#"><i class="material-icons">settings</i></a></li>

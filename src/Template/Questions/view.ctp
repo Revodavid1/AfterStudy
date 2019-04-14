@@ -27,6 +27,10 @@
                     <div class="card-panel white z-depth-2">
                         <p>Asked by: <?= $thisquestion->user->fullname ?></p>
                         <p>Date: <?= $thisquestion->created ?></p>
+                        <?php if(!empty($thisquestion->project->short_title)){
+                            echo '<p>Project: ' .$thisquestion->project->short_title. '</p>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -55,7 +59,7 @@
                         <p>Date: <?= $thisquestionanswers->created; ?></p>
                         <?php if($thisquestion->user->id == $this->Session->read('Auth.User.id')
                                 && $thisquestion->openclose != 'closed'){
-                            echo $this->Form->PostLink('Mark Correct',['action' => 'markCorrect',
+                            echo $this->Form->PostLink('Mark Correct',['action' => 'markcorrect',
                                 $thisquestionanswers->id,$thisquestion->id],
                                 ['class'=>'btn-small green white-text']);
                         }?>

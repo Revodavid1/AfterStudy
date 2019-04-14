@@ -12,10 +12,12 @@
                     style="font-weight:400;font-size:2.0rem;line-height: 1.33333;display: inline;">
                     <?= $this->Session->read('Auth.User.fullname');?></h2>
                 </div>
-                <div class="col s10"><i class="material-icons">school</i>
+                <div class="col s10">
                     <span><h2 style="margin-bottom: 2px; margin-top: 4px;font-size:1.0rem;line-height: 
-                    1.33333;font-weight:400;display: inline;"><?= $this->Session->read('Auth.User.major');?>
-                    <?= $this->Session->read('Auth.User.class_standing');?> Student 
+                    1.33333;font-weight:400;display: inline;">
+                    <?= $this->Session->read('Auth.User.email');?>
+                    <br/>
+                    <?= $this->Session->read('Auth.User.phone');?> 
                     </h2></span>
                 </div>
             </div>
