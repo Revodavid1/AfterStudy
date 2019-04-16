@@ -5,9 +5,12 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 
 class UsersController extends AppController
 {
+    
     public function login()
     {
         $this->layout= 'home'; 
@@ -15,11 +18,22 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                if ($user['verified'] == 'yes') {
+                    $this->Auth->setUser($user);
+                    return $this->redirect($this->Auth->redirectUrl());
+                }
+                else{
+                    $this->Flash->error('User not verified, Please verify your email');
+                    return $this->redirect(['action' => 'verifyemail',$user['email']]);
+                }
             }
-            $this->Flash->error('Your username or password is incorrect.');
+            else{
+                $this->Flash->error('Your username or password is incorrect.');
+            }
         }
+
+        
+        
     }
     public function register()
     {
@@ -27,16 +41,47 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            $user->verified = 'yes';
-            $user->email = $user->email.'@wildcats.unh.edu';
+            $user->verified = 'no';
+            $random_hash = md5(uniqid(rand(), true));
+            $updateverifycode->verify_code = $random_hash;
+            //$user->email = $user->email.'@wildcats.unh.edu';
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Registration saved successfully.'));
-                return $this->redirect(['action' => 'login']);
+                return $this->redirect(['action' => 'verifyemail',$user->email]);
             }
             $this->Flash->error(__('Unable to add the user.'));
         }
         $this->set('user', $user);
     }
+    public function verifyemail($email){
+        $this->layout= 'home';
+        $verifyuser = $this->Users->findByEmail($email)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Users->patchEntity($verifyuser, $this->request->getData());
+            if(!empty($verifyuser->v_code != '')){
+                if($verifyuser->v_code == $verifyuser->verify_code){ 
+                    $verifyuser->verified = 'yes';
+                    if ($this->Users->save($verifyuser)) {
+                        $this->Flash->success(__('verified successfully.'));
+                        return $this->redirect(['action' => 'login']);
+                    }
+                }
+                else{
+                    $this->Flash->error(__('Invalid code'));
+                }
+            }
+        }
+        $this->set('verifyuser', $verifyuser);
+        /*
+        $email = new Email('dev');
+        $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
+                ->to('david_omu@yahoo.com')
+                //->template('welcome')
+                ->emailFormat('html')
+                ->subject('Test')
+                ->send();*/
+    }
+
     public function dashboard()
     {
         $this->layout = 'validuser';
@@ -81,7 +126,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout', 'register']);
+        $this->Auth->allow(['logout', 'register','verifyemail']);
 
     }
 

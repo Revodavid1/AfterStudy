@@ -11,7 +11,6 @@
         <legend><?= __('Add Tag') ?></legend>
         <?php
             echo $this->Form->control('title',array('class'=>'validate','data-length'=>'191','id'=>'title'));
-            //echo $this->Form->control('questions._ids', ['options' => $questions]);
         ?>
         <div>
             <?= $this->Form->button(__('Submit'),['class' => 'green waves-effect waves-light btn-flat white-text'],

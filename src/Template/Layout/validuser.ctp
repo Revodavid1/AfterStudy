@@ -86,7 +86,7 @@
         <li class="collection-item">
             <div><i class="material-icons">work</i>
                 <?= $this->Html->Link(
-                        'Projects',
+                        'Individual Projects',
                         array('controller'=>'projects','action' => 'index'),
                         array('class'=>'blue-grey-text','escape' => false)
 
@@ -122,7 +122,7 @@
         <li class="collection-item">
             <div><i class="material-icons">work</i>
                 <?= $this->Html->Link(
-                        'Projects',
+                        'Individual Projects',
                         array('controller'=>'projects','action' => 'index'),
                         array('class'=>'blue-grey-text','escape' => false)
 
