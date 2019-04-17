@@ -27,7 +27,7 @@
                         <?= $this->Html->link('No Account? Sign Up Here', ['action' => 'register']) ?>
                     </div>
                     <div class="col s6">
-                        <?= $this->Html->link('Forgot Password?', ['action' => 'register'], ['class' => 'red-text'])?>
+                        <?= $this->Html->link('Forgot Password?', ['action' => 'recoverpassword'], ['class' => 'red-text'])?>
                     </div>
                 </div> 
             </div>

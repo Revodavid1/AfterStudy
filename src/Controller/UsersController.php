@@ -46,7 +46,8 @@ class UsersController extends AppController
             $user->verify_code = $random_hash;
             //$user->email = $user->email.'@wildcats.unh.edu';
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Registration saved successfully. Verify Email'));
+                $this->Flash->success(__('Registration saved successfully. 
+                                            A verification link has been sent to your email'));
                 $email = new Email('dev');
                 $email->setViewVars(['verify_code' => $random_hash]);
                 $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
@@ -70,7 +71,7 @@ class UsersController extends AppController
                 if($verifyuser->v_code == $verifyuser->verify_code){ 
                     $verifyuser->verified = 'yes';
                     if ($this->Users->save($verifyuser)) {
-                        $this->Flash->success(__('verified successfully.'));
+                        $this->Flash->success(__('Verified successfully.'));
                         return $this->redirect(['action' => 'login']);
                     }
                 }
@@ -80,6 +81,62 @@ class UsersController extends AppController
             }
         }
         $this->set('verifyuser', $verifyuser);
+    }
+    public function verifyme($token){
+        $this->layout= 'home';
+        $theuser = $this->Users->findByVerifyCode($token)->first();
+        if($theuser){
+            $theuser->verified = 'yes';
+            if ($this->Users->save($theuser)) {
+                $this->Flash->success(__('Verified successfully.'));
+                return $this->redirect(['action' => 'login']);
+            }
+        }
+        else{
+            $this->Flash->error(__('Verification failed.'));
+            return $this->redirect(['action' => 'login']);
+        }
+    }
+    public function recoverpassword(){
+        $this->layout= 'home';
+        if ($this->request->is(['post','put'])) {
+            $useremail = $this->request->getData('email');
+            $random_hash = md5(uniqid(rand(), true));
+            $theuser = $this->Users->findByEmail($useremail)->first();
+            if ($theuser){
+                $theuser->verify_code = $random_hash;
+                if ($this->Users->save($theuser)) {
+                    $email = new Email('dev');
+                    $email->setViewVars(['random_hash' => $random_hash]);
+                    $email->setViewVars(['name' => $theuser->fullname]);
+                    $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
+                            ->to($useremail)
+                            ->template('resetpassword')
+                            ->emailFormat('html')
+                            ->subject('EasyTasks Password Reset')
+                            ->send();
+                    $this->Flash->success(__('Reset password code has been sent to your email '.$useremail.''));
+                }
+            }
+            else{
+                $this->Flash->error(__('Email not found'));
+            }
+        }    
+    }
+    public function resetpassword($token){
+        $this->layout= 'home';
+        if ($this->request->is(['post'])) {
+            $userpassword = $this->request->getData('password');
+            $theuser = $this->Users->findByVerifyCode($token)->first();
+            $theuser->password = $userpassword;
+            if ($this->Users->save($theuser)) {
+                $this->Flash->success(__('Password reset successful'));
+                return $this->redirect(['action' => 'login']);
+            }
+            else{
+                $this->Flash->error(__('Unable to reset password'));
+            }
+        }
     }
 
     public function dashboard()
@@ -126,7 +183,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout', 'register','verifyemail']);
+        $this->Auth->allow(['logout', 'register','verifyemail','recoverpassword','resetpassword','verifyme']);
 
     }
 

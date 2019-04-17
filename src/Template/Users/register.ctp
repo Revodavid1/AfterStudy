@@ -28,20 +28,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s6">
+                        <div class="col s12">
                             <div class="col s2">
                                 <i class="material-icons prefix">email</i>
                             </div>
                             <div class="col s10">
                                 <?= $this->Form->input('email',array('type' => 'text',
-                                    'label'=>'Email ID (ex: abc0001)'));?>
+                                    'label'=>'Email'));?>
                             </div>
                         </div>
+                        <!--Currently not using this
                         <div class="col s6 center">
-                            <?= $this->Form->input('domain', array('type' => 'select', 
-                                'class'=>'browser-default','options'=>['@wildcats.unh.edu'],'disabled'=>'true'),
-                            );?>
+                            <?php //echo $this->Form->input('domain', array('type' => 'select', 
+                                //'class'=>'browser-default','options'=>['@wildcats.unh.edu'],'disabled'=>'true'),
+                            //);?>
                         </div>
+                        -->
                     </div>
                     <div class="row">
                         <div class="input-field col s12">

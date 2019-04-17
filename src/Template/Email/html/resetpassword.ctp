@@ -41,21 +41,18 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="esd-block-text" align="left">
-                                                                                        <h1 style="color: #4a7eb0;">Verify Your Account</h1>
+                                                                                        <p>Hello <?= $name?>,</p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="esd-block-text" align="left">
-                                                                                        <p>Please verify your account to finish setting you your EasyTask account. Copy the code below:</p>
+                                                                                        <h1 style="color: #4a7eb0;">Reset your password</h1>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td class="esd-block-button es-p20t es-p20b" align="left"> <span class="es-button-border"> <b><?= $verify_code ?></b> </span> </td>
-                                                                                </tr>
-                                                                                <tr>
                                                                                     <td class="esd-block-button es-p20t es-p20b" align="left"> 
-                                                                                        <span class="es-button-border"> or click 
-                                                                                        <a href="http://localhost/afterstudy/users/verifyme/<?= $verify_code?>">here</a> to verify your account.    
+                                                                                        <span class="es-button-border"> Please click 
+                                                                                        <a href="http://localhost/afterstudy/users/resetpassword/<?= $random_hash?>">here</a> to change your password.    
                                                                                         </span> 
                                                                                         </td>
                                                                                 </tr>
