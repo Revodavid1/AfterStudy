@@ -43,10 +43,18 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->getData());
             $user->verified = 'no';
             $random_hash = md5(uniqid(rand(), true));
-            $updateverifycode->verify_code = $random_hash;
+            $user->verify_code = $random_hash;
             //$user->email = $user->email.'@wildcats.unh.edu';
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Registration saved successfully.'));
+                $this->Flash->success(__('Registration saved successfully. Verify Email'));
+                $email = new Email('dev');
+                $email->setViewVars(['verify_code' => $random_hash]);
+                $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
+                        ->to('david_omu@yahoo.com')
+                        ->template('welcome')
+                        ->emailFormat('html')
+                        ->subject('EasyTasks Verification')
+                        ->send();
                 return $this->redirect(['action' => 'verifyemail',$user->email]);
             }
             $this->Flash->error(__('Unable to add the user.'));
@@ -72,14 +80,6 @@ class UsersController extends AppController
             }
         }
         $this->set('verifyuser', $verifyuser);
-        /*
-        $email = new Email('dev');
-        $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
-                ->to('david_omu@yahoo.com')
-                //->template('welcome')
-                ->emailFormat('html')
-                ->subject('Test')
-                ->send();*/
     }
 
     public function dashboard()

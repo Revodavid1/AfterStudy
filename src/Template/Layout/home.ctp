@@ -43,7 +43,7 @@
     </script>
 
     <div class="row" style="margin-top:10px">
-        <div class="col s6">
+        <div class="col s12 m6 l6">
             <div class="slider">
                 <ul class="slides">
                     <li>
@@ -64,7 +64,7 @@
             </div>
         </div> 
 
-        <div class="col s6">
+        <div class="col s12 l6 m6">
             <?php echo $this->fetch('content'); ?>
         </div>
     </div>
