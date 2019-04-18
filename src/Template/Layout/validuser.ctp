@@ -81,7 +81,7 @@
     <ul id="slide-out" class="sidenav sidenav-fixed collection" 
         style="width:200px;margin-top: 60px;">
         <li><div class="brand-logo center">
-                <?=$this->Html->image('afterstudy.png');?>
+                <?=$this->Html->image('easy.png');?>
             </div></li>
         <li class="collection-item">
             <div><i class="material-icons">work</i>
@@ -113,11 +113,21 @@
                     );?>
             </div>
         </li>
+        <li class="collection-item">
+            <div><i class="material-icons">assignment</i>
+                <?= $this->Html->Link(
+                        'My Open Tasks',
+                        array('controller'=>'tasks','action' => 'mytasks'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
     </ul>
     <ul id="sidenavout" class="sidenav collection hide-on-med-and-up" 
         style="width:200px;margin-top: 60px;">
         <li><div class="brand-logo center">
-                <?=$this->Html->image('afterstudy.png');?>
+                <?=$this->Html->image('easy.png');?>
             </div></li>
         <li class="collection-item">
             <div><i class="material-icons">work</i>
@@ -144,6 +154,16 @@
                 <?= $this->Html->Link(
                         'QA Forum',
                         array('controller'=>'groups','action' => 'index'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
+        <li class="collection-item">
+            <div><i class="material-icons">assignment</i>
+                <?= $this->Html->Link(
+                        'My Open Tasks',
+                        array('controller'=>'tasks','action' => 'mytasks'),
                         array('class'=>'blue-grey-text','escape' => false)
 
                     );?>

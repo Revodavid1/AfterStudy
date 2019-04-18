@@ -7,6 +7,7 @@
         }  
     }                     
 ?>
+<?php echo $this->element('groupnavextend'); ?>
 <div class="card white" style="margin-top:5px">
 <div class="center">
     <?= $this->Flash->render() ?>
@@ -59,10 +60,13 @@
         <div class="card white">
             <div class="card-content">
                 <span class="card-title">Group Projects
-                        <?= $this->Html->link('Create New',['action' => 'addproject',$groupid,$owner], 
-                        ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small z-depth-2']
-                        );?>
-                        </span></span>
+                    <?= $this->Html->link('Create New',['action' => 'addproject',$groupid,$owner], 
+                    ['class'=>'blue-grey darken-4 waves-effect waves-light btn-small z-depth-2']
+                    );?>
+                </span>
+                <p class='blue-grey-text'><span class='left'><i class="small material-icons">info</i></span>
+                    Group projects are only available to group members.
+                </p>
                 <table class="responsive-table">
                     <thead>
                         <tr>

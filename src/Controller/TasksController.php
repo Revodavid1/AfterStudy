@@ -138,11 +138,22 @@ class TasksController extends AppController
             $this->request->getParam('action') === 'all'||
             $this->request->getParam('action') === 'edit'||
             $this->request->getParam('action') === 'createdlist'||
-            $this->request->getParam('action') === 'update' ) {
+            $this->request->getParam('action') === 'update' ||
+            $this->request->getParam('action') === 'mytasks' ) {
             return true;
         }
         return parent::isAuthorized($user);
     }
+    public function mytasks() 
+    {
+        $this->layout= 'validuser'; 
+        $this->loadComponent('Paginator');
+        $mytasks = $this->Paginator->paginate($this->Tasks->findAllByAssignedTo($this->Auth->user('id'))
+        ->where(['Tasks.status !=' => 'Completed'])
+        ->contain(['Projects','Taskgroups']));
+        $this->set(compact('mytasks'));
+    }
+
     public function update($project_id,$task_id)
     {
         $this->layout= 'projectview'; 

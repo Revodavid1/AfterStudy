@@ -21,7 +21,7 @@
     <nav>
         <div class="nav-wrapper blue-grey darken-2" style="color:white;">
             <div class="brand-logo center">
-                <?=$this->Html->image('afterstudy.png', array('height'=>'70px'));?>
+                <?=$this->Html->image('easy.png', array('height'=>'70px'));?>
             </div>
             <ul class="left">
                 <li><h5>EasyTasks</h5></li>

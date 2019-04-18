@@ -9,6 +9,7 @@ use Cake\ORM;
 use Cake\ORM\ResultSet;
 use  Cake\ORM\Table;
 use Cake\Datasource\ConnectionManager;
+use Cake\Network\Exception\NotFoundException;
 
 class ProjectsController extends AppController
 {
@@ -80,7 +81,22 @@ class ProjectsController extends AppController
             ->contain(['Users','Skills','Bids'])
             ->where(['Projects.privacy' => 'All']));
         $this->set(compact('projects'));
-
+    }
+    public function mybids() 
+    {
+        $this->layout= 'validuser'; 
+        $this->loadComponent('Paginator');
+        $query  = $this->Projects->find('all',array(
+            'order' => array('Bids.created' => 'desc')))->contain(['Users']);
+        $query ->matching('Bids',function ($q) {
+            return $q->where(['Bids.user_id' => $this->Auth->user('id')]);
+        });
+        $this->set('projectrequests',$query);
+    }
+    public function myprojects() 
+    {
+        $this->layout= 'validuser'; 
+        $this->loadComponent('Paginator');
         $joinedprojects = $this->Projects->find('all')->select([
             'id_alias'=>'projects.id','slug'=>'projects.slug','short_title'=>'projects.short_title',
             'status'=>'projects.status','created'=>'projects.created',
@@ -108,13 +124,6 @@ class ProjectsController extends AppController
                 ->order(['id_alias' => 'desc'])
         );
         $this->set(compact('myprojects'));
-
-        $query  = $this->Projects->find('all',array(
-            'order' => array('Bids.created' => 'desc')))->contain(['Users']);
-        $query ->matching('Bids',function ($q) {
-            return $q->where(['Bids.user_id' => $this->Auth->user('id')]);
-        });
-        $this->set('projectrequests',$query);
     }
 
     public function initialize()
@@ -132,7 +141,9 @@ class ProjectsController extends AppController
             $this->request->getParam('action') === 'members'||
             $this->request->getParam('action') === 'projectmode'||
             $this->request->getParam('action') === 'request'||
-            $this->request->getParam('action') === 'questions'  ) {
+            $this->request->getParam('action') === 'questions' ||
+            $this->request->getParam('action') === 'myprojects'||
+            $this->request->getParam('action') === 'mybids'  ) {
             return true;
         }
         return parent::isAuthorized($user);
@@ -143,17 +154,20 @@ class ProjectsController extends AppController
         if (!$id) {
             throw new NotFoundException(__('Invalid Project'));
         }
-        $thisproject = $this->Projects->findById($id)->contain(['Users','Bids','Skills']);
-        if (!$thisproject) {
-            throw new NotFoundException(__('Invalid post'));
+        else{
+            $thisproject = $this->Projects->findById($id)->contain(['Users','Bids','Skills']);
+            if (!$thisproject->count()) {
+                throw new NotFoundException(__('Invalid post'));
+            }
+            else{
+                $this->set('thisproject', $thisproject);
+                $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
+                ->order(['Bids.id'=> 'desc']);
+                $bidderscount = $bidders->count();
+                $this->set(compact('bidders'));
+                $this->set('bidderscount',$bidderscount);
+            }          
         }
-        $this->set('thisproject', $thisproject);
-
-        $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
-        ->order(['Bids.id'=> 'desc']);
-        $bidderscount = $bidders->count();
-        $this->set(compact('bidders'));
-        $this->set('bidderscount',$bidderscount);
     }
     public function projectmode($id = null)
     {
@@ -166,7 +180,11 @@ class ProjectsController extends AppController
         if (!$thisproject) {
             throw new NotFoundException(__('Invalid post'));
         }
+        foreach($thisproject as $currentproject){
+            $thisprojectname = $currentproject->short_title;
+        }
         $this->set('thisproject', $thisproject);
+        $this->set('thisprojectname', $thisprojectname);
 
         $bidders = $this->Projects->Bids->findAllByProjectId($id)->contain(['Users'=>'Skills'])
         ->order(['Bids.id'=> 'desc']);

@@ -49,7 +49,7 @@
                 <div class="col s3">
                     <?php if($thisquestionanswers->correctanswer === true){
                                 echo'<div class="card-panel green white-text z-depth-2">
-                                <p class="card-title">Correct Answer</p>';}
+                                <p class="card-title">Most Helpful Answer</p>';}
                         else{
                             echo'<div class="card-panel white z-depth-2">';
                         }
@@ -59,7 +59,7 @@
                         <p>Date: <?= $thisquestionanswers->created; ?></p>
                         <?php if($thisquestion->user->id == $this->Session->read('Auth.User.id')
                                 && $thisquestion->openclose != 'closed'){
-                            echo $this->Form->PostLink('Mark Correct',['action' => 'markcorrect',
+                            echo $this->Form->PostLink('Mark as Most Helpful',['action' => 'markcorrect',
                                 $thisquestionanswers->id,$thisquestion->id],
                                 ['class'=>'btn-small green white-text']);
                         }?>

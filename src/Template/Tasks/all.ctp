@@ -1,4 +1,5 @@
-<!-- File: src/Template/Taskgroups/index.ctp -->
+<!-- File: src/Template/Tasks/all.ctp -->
+<?php echo $this->element('projecttasksnavextend'); ?>
 <div class="row">
     <div class="col s12">
         <div class="row">

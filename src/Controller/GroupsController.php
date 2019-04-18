@@ -15,6 +15,7 @@ class GroupsController extends AppController
     public function addproject($groupid,$owner)
     {
         $this->layout= 'validuser'; 
+        $groupid = $groupid;
         $groupproject = $this->Groups->Projects->newEntity();
         if ($this->request->is('post')) {
             $groupproject = $this->Groups->Projects->patchEntity($groupproject, $this->request->getData());
