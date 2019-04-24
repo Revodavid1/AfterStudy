@@ -31,9 +31,6 @@ class UsersController extends AppController
                 $this->Flash->error('Your username or password is incorrect.');
             }
         }
-
-        
-        
     }
     public function register()
     {
@@ -141,13 +138,14 @@ class UsersController extends AppController
 
     public function dashboard()
     {
-        $this->layout = 'validuser';
+        $this->viewBuilder()->setLayout('validuser');
         $logged_in_user = $this->Auth->user('fullname'); 
 
         //project count
         $query = $this->Users->find()->innerJoinWith('Projects')
         ->select(['Users.id', 'Projects.User_id'])
-        ->where(['Projects.User_id' =>$this->Auth->user('id')]);
+        ->where(['Projects.User_id' =>$this->Auth->user('id')])
+        ->where(['Projects.group_id IS NULL']);
         $myprojectcount = $query->count();
         $this->set('myprojectcount', $myprojectcount);
 
@@ -156,6 +154,77 @@ class UsersController extends AppController
         ->where(['Bids.user_id' =>$this->Auth->user('id')]);
         $requestedprojectcount = $requestedquery->count();
         $this->set('requestedprojectcount', $requestedprojectcount);
+
+        //request to join me count
+        $joinmequery = $this->Users->Projects->find()->innerJoinWith('Bids')
+        ->select(['Projects.id', 'Bids.id'])
+        ->where(['Projects.User_id' =>$this->Auth->user('id')]);
+        $joinmequerycount = $joinmequery->count();
+        $this->set('joinmequerycount', $joinmequerycount);
+
+        //requests accepted
+        $requestsacceptedquery = $this->Users->find()->innerJoinWith('Bids')
+        ->select(['Users.id', 'Bids.user_id'])
+        ->where(['Bids.user_id' =>$this->Auth->user('id')])
+        ->where(['Bids.status' => 'Accepted']);
+        $requestsacceptedquerycount = $requestsacceptedquery->count();
+        $this->set('requestsacceptedquerycount', $requestsacceptedquerycount);
+
+        //requests rejected
+        $requestsrejectedquery = $this->Users->find()->innerJoinWith('Bids')
+        ->select(['Users.id', 'Bids.user_id'])
+        ->where(['Bids.user_id' =>$this->Auth->user('id')])
+        ->where(['Bids.status' => 'Rejected']);
+        $requestsrejectedquerycount = $requestsrejectedquery->count();
+        $this->set('requestsrejectedquerycount', $requestsrejectedquerycount);
+
+        //project completed count
+        $projectcompletequery = $this->Users->Projects->findAllByUserId($this->Auth->user('id'))
+        ->where(['Projects.status' => 'Completed']);
+        $projectcompletequerycount = $projectcompletequery->count();
+        $this->set('projectcompletequerycount', $projectcompletequerycount);
+
+        //project inprogress count
+        $projectinprogressquery = $this->Users->Projects->findAllByUserId($this->Auth->user('id'))
+        ->where(['Projects.status' => 'In Progress']);
+        $projectinprogressquerycount = $projectinprogressquery->count();
+        $this->set('projectinprogressquerycount', $projectinprogressquerycount);
+
+        //tasks created
+        $taskscreatedquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NULL']);
+        $taskscreatedquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.created_by' => $this->Auth->user('id')]);
+        });
+        $taskscreatedquerycount = $taskscreatedquery->count();
+        $this->set('taskscreatedquerycount',$taskscreatedquerycount);
+
+        //tasks assigned
+        $tasksassignedtoquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NULL']);
+        $tasksassignedtoquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id')]);
+        });
+        $tasksassignedtoquerycount = $tasksassignedtoquery->count();
+        $this->set('tasksassignedtoquerycount',$tasksassignedtoquerycount);
+
+        //tasks completed
+        $taskscompletedquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NULL']);
+        $taskscompletedquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id'),'Tasks.status' => 'Completed']);
+        });
+        $taskscompletedquerycount = $taskscompletedquery->count();
+        $this->set('taskscompletedquerycount',$taskscompletedquerycount);
+
+        //tasks pending
+        $taskspendingquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NULL']);
+        $taskspendingquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id'),'Tasks.status !=' => 'Completed']);
+        });
+        $taskspendingquerycount = $taskspendingquery->count();
+        $this->set('taskspendingquerycount',$taskspendingquerycount);
         
         //group count
         $query = $this->Users->find()->innerJoinWith('Groups')
@@ -163,6 +232,85 @@ class UsersController extends AppController
         ->where(['Groups.owner' => $this->Auth->user('id')]);
         $mygroupcount = $query->count();
         $this->set('mygroupcount', $mygroupcount);
+
+        //other group count
+        $othergroups = $this->Users->get($this->Auth->user('id'), ['contain' => ['Groups']]);
+        $myothergroupcount = 0;
+        foreach($othergroups->groups as $others){
+            $myothergroupcount = $myothergroupcount + 1;
+            
+        }
+        $this->set('myothergroupcount', $myothergroupcount);
+
+        //group projects created
+        $myownedgroupprojects= $this->Users->Projects->findAllByUserId($this->Auth->user('id'))
+        ->where(['Projects.group_id IS NOT NULL']);
+        $myownedgroupprojectscount = $myownedgroupprojects->count();
+        $this->set('myownedgroupprojectscount', $myownedgroupprojectscount);
+
+        //group tasks created
+        $grouptaskscreatedquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NOT NULL']);
+        $grouptaskscreatedquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.created_by' => $this->Auth->user('id')]);
+        });
+        $grouptaskscreatedquerycount = $grouptaskscreatedquery->count();
+        $this->set('grouptaskscreatedquerycount',$grouptaskscreatedquerycount);
+
+        //group tasks assigned
+        $grouptasksassignedtoquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NOT NULL']);
+        $grouptasksassignedtoquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id')]);
+        });
+        $grouptasksassignedtoquerycount = $grouptasksassignedtoquery->count();
+        $this->set('grouptasksassignedtoquerycount',$grouptasksassignedtoquerycount);
+
+        //group tasks completed
+        $grouptaskscompletedquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NOT NULL']);
+        $grouptaskscompletedquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id'),'Tasks.status' => 'Completed']);
+        });
+        $grouptaskscompletedquerycount = $grouptaskscompletedquery->count();
+        $this->set('grouptaskscompletedquerycount',$grouptaskscompletedquerycount);
+
+        //group tasks pending
+        $grouptaskspendingquery = $this->Users->Projects->find()
+        ->where(['Projects.group_id IS NOT NULL']);
+        $grouptaskspendingquery ->matching('Tasks',function ($q) {
+            return $q->where(['Tasks.assigned_to' => $this->Auth->user('id'),'Tasks.status !=' => 'Completed']);
+        });
+        $grouptaskspendingquerycount = $grouptaskspendingquery->count();
+        $this->set('grouptaskspendingquerycount',$grouptaskspendingquerycount);
+
+        //questions count
+        $myquestions = $this->Users->Questions->findAllByUserId($this->Auth->user('id'));
+        $myquestionscount = $myquestions->count();
+        $this->set('myquestionscount', $myquestionscount);
+
+        //project related questions count
+        $myprojectquestions = $this->Users->Questions->findAllByUserId($this->Auth->user('id'))
+        ->where(['Questions.project_id IS NOT NULL']);
+        $myprojectquestionscount = $myprojectquestions->count();
+        $this->set('myprojectquestionscount', $myprojectquestionscount);
+
+        //questions answered count
+        $myquestionsanswered = $this->Users->Questions->findAllByUserId($this->Auth->user('id'))
+        ->where(['Questions.openclose'=>'closed']);
+        $myquestionsansweredcount = $myquestionsanswered->count();
+        $this->set('myquestionsansweredcount', $myquestionsansweredcount);
+
+        //answers count
+        $myanswers = $this->Users->Answers->findAllByUserId($this->Auth->user('id'));
+        $myanswerscount = $myanswers->count();
+        $this->set('myanswerscount', $myanswerscount);
+
+        //helpful answers count
+        $myhelpfulanswers = $this->Users->Answers->findAllByUserId($this->Auth->user('id'))
+        ->where(['Answers.correctanswer'=>true]);
+        $myhelpfulanswerscount = $myhelpfulanswers->count();
+        $this->set('myhelpfulanswerscount', $myhelpfulanswerscount);
 
         $skillsadd = $this->Users->findById($this->Auth->user('id'))->contain(['Skills'])->firstOrFail();
         if ($this->request->is(['post', 'put'])) {
@@ -179,6 +327,27 @@ class UsersController extends AppController
         ]);
         $this->set(compact('allskills'));
         $this->set('skillsadd', $skillsadd);
+    }
+    public function edit()
+    {
+        $this->viewBuilder()->setLayout('validuser');
+        $edituser = $this->Users->findById($this->Auth->user('id'))->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Users->patchEntity($edituser, $this->request->getData());
+            if ($this->Users->save($edituser)) {
+                $this->Auth->setUser($edituser);
+                return $this->redirect(['action' => 'dashboard']);
+            }
+            $this->Flash->error(__('Unable to edit your profile.'));
+        }
+        $this->set('edituser', $edituser);
+
+    }
+    public function isAuthorized($user) {
+        if ($this->request->getParam('action') === 'edit') {
+            return true;
+        }
+        return parent::isAuthorized($user);
     }
     public function initialize()
     {

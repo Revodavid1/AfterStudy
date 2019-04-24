@@ -3,9 +3,12 @@
     <div class="col s12 m3 l3">
         <div class="revcard card">
             <div class="card-image">
-                <?=$this->Html->image('port.jpg',['style'=>'width:100%;max-height: 200px;']);?>
-                <a class="btn-floating halfway-fab waves-effect waves-light orange">
-                    <i class="material-icons">edit</i></a>
+                <?=$this->Html->image('blankuser.png',['style'=>'width:100%;max-height: 250px;']);?>
+                <?= $this->Html->Link($this->Html->tag('i','edit', 
+                        array('class'=>'material-icons')),
+                        array('action' => 'edit'),
+                        array('class'=>'btn-floating halfway-fab waves-effect waves-light orange','escape' => false)
+                );?>
             </div>
             <div class="row">
                 <div class="col s10"><h2 
@@ -53,7 +56,8 @@
             <div class="col s12">
                 <div class="card-panel blue-grey darken-4 white-text">
                     <div class="card-content">
-                        <span class="card-title">Projects<?= $this->Html->Link($this->Html->tag('i','add', 
+                        <span class="card-title">Individual Projects
+                            <?= $this->Html->Link($this->Html->tag('i','add', 
                             array('class'=>'material-icons avatar black circle white-text tooltipped',
                             'data-position'=>'bottom','data-tooltip'=>'Add a Project')),
                             array('controller'=>'projects','action' => 'add'),
@@ -68,42 +72,48 @@
                 <li class="collection-item"><div>Projects Created <span class="chip black badge white-text">
                     <?=$myprojectcount?></span></div>
                 </li>
-                <li class="collection-item"><div>Requests I made 
-                    <span class="chip orange badge white-text"><?=$requestedprojectcount?></span>
+                <li class="collection-item"><div>My Bids 
+                    <span class="chip green badge white-text"><?=$requestedprojectcount?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>My Bids (Accepted)
+                    <span class="chip green badge white-text"><?=$requestsacceptedquerycount?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>My Bids (Rejected)
+                    <span class="chip red badge white-text"><?=$requestsrejectedquerycount?></span>
                     </div>
                 </li>
                 <li class="collection-item"><div>Requests to join me
-                    <span class="chip orange badge white-text">- </span>
+                    <span class="chip green badge white-text"><?=$joinmequerycount?></span>
                     </div>
                 </li>
-                <li class="collection-item"><div>- your request accepted<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar green circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View accepted requests">check</i></a></div></li>
-                <li class="collection-item"><div>- your request rejected<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar red circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View rejected requests">highlight_off</i></a></div></li>
-                <li class="collection-item"><div>- collaborated with<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar white  black-text tooltipped"
-                    data-position="bottom" data-tooltip="See Requests to Collaborate">people</i></a></div></li>
-                <li class="collection-item"><div>- completed<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar green circle white-text tooltipped"
-                    data-position="bottom" data-tooltip="View Completed Projects">event_available</i></a></div></li>
-                <li class="collection-item"><div>- Average Rating<a href="#!" class="secondary-content">
-                    <i class="material-icons avatar amber-text white tooltipped"
-                    data-position="bottom" data-tooltip="See Project Ratings">star</i></a></div></li>
+                <li class="collection-item"><div>Completed Projects
+                    <span class="chip green badge white-text"><?=$projectcompletequerycount?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>In Progress Projects
+                    <span class="chip orange badge white-text"><?=$projectinprogressquerycount?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Created
+                    <span class="chip black badge white-text"> <?=$taskscreatedquerycount ?> </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Assigned to Me
+                    <span class="chip orange badge white-text"> <?=$tasksassignedtoquerycount?> </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Completed
+                    <span class="chip green badge white-text"> <?=$taskscompletedquerycount?> </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Tasks Pending
+                    <span class="chip orange badge white-text"> <?=$taskspendingquerycount?> </span>
+                    </div>
+                </li>
             </ul>
         </div>
-    </div>
-    <div class="col s12 m3 l3">
-        <div class="row">
-            <div class="col s12">
-                <div class="card-panel blue-grey darken-4 white-text">
-                    <div class="card-content">
-                        <span class="card-title">QA</span>
-                    </div>
-                </div>
-            </div>
-        </div> 
     </div>
     <div class="col s12 m3 l3">
         <div class="row">
@@ -125,39 +135,69 @@
                 <li class="collection-item"><div>Groups Created <span class="chip black badge white-text">
                     <?=$mygroupcount?></div>
                 </li>
-                <li class="collection-item"><div>Other Groups Joined
-                    <span class="chip orange badge white-text"> - </span>
+                <li class="collection-item"><div>Other Groups
+                    <span class="chip green badge white-text"><?= $myothergroupcount ?></span>
                     </div>
                 </li>
-                <li class="collection-item"><div>Group Project Created
-                    <span class="chip orange badge white-text"> - </span>
+                <li class="collection-item"><div>Projects Created
+                    <span class="chip black badge white-text"> <?= $myownedgroupprojectscount ?> </span>
                     </div>
                 </li>
-                <li class="collection-item"><div>Other Groups Joined
-                    <span class="chip orange badge white-text">- </span>
-                    </div>
-                </li>
-                <li class="collection-item"><div>TaskGroups Created
-                    <span class="chip orange badge white-text">- </span>
-                    </div>
-                </li>
-                <li class="collection-item"><div>Group Tasks Created
-                    <span class="chip orange badge white-text">- </span>
+                <li class="collection-item"><div>Tasks Created
+                    <span class="chip black badge white-text"> <?=$grouptaskscreatedquerycount ?> </span>
                     </div>
                 </li>
                 <li class="collection-item"><div>Tasks Assigned to Me
-                    <span class="chip orange badge white-text">- </span>
+                    <span class="chip orange badge white-text"> <?=$grouptasksassignedtoquerycount?> </span>
                     </div>
                 </li>
                 <li class="collection-item"><div>Tasks Completed
-                    <span class="chip orange badge white-text">- </span>
+                    <span class="chip green badge white-text"> <?=$grouptaskscompletedquerycount?> </span>
                     </div>
                 </li>
-                <li class="collection-item"><div>Group Ratings
-                    <span class="chip orange badge white-text">- </span>
+                <li class="collection-item"><div>Tasks Pending
+                    <span class="chip orange badge white-text"> <?=$grouptaskspendingquerycount?> </span>
                     </div>
                 </li>
-                
+            </ul>
+        </div>
+    </div>
+    <div class="col s12 m3 l3">
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel blue-grey darken-4 white-text">
+                    <div class="card-content">
+                    <span class="card-title">QA<?= $this->Html->Link($this->Html->tag('i','add', 
+                                array('class'=>'material-icons avatar black circle white-text tooltipped',
+                                'data-position'=>'bottom','data-tooltip'=>'Add a Question')),
+                                array('controller'=>'questions','action' => 'add'),
+                                array('class'=>'secondary-content','escape' => false)
+                        );?></span>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <ul class="col s12 collection">
+                <li class="collection-item"><div>Questions Created <span class="chip black badge white-text">
+                    <?=$myquestionscount?></div>
+                </li>
+                <li class="collection-item"><div>Project Related
+                    <span class="chip black badge white-text"><?= $myprojectquestionscount ?></span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>Questions Answered
+                    <span class="chip green badge white-text"> <?= $myquestionsansweredcount ?> </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>My Answers
+                    <span class="chip black badge white-text"> <?=$myanswerscount ?> </span>
+                    </div>
+                </li>
+                <li class="collection-item"><div>My Helpful Answers
+                    <span class="chip green badge white-text"> <?=$myhelpfulanswerscount?> </span>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

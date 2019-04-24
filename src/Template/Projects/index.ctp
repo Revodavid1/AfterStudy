@@ -21,7 +21,7 @@
                                 <div class="col s12">
                                     <div class="row">
                                         <div class="col s6 valign-wrapper">
-                                            <img src="webroot\img\port.jpg" height="2" alt="" 
+                                            <img src="webroot\img\blankuser.png" height="2" alt="" 
                                                 class=" circle responsive-img" style="width: 10%;">
                                                 <span style="margin-left:2px;font-weight:bold" class="black-grey-text"> 
                                                     <?= $projects->user->fullname?></span>

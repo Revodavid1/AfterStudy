@@ -153,7 +153,7 @@
             <div><i class="material-icons">live_help</i>
                 <?= $this->Html->Link(
                         'QA Forum',
-                        array('controller'=>'groups','action' => 'index'),
+                        array('controller'=>'questions','action' => 'index'),
                         array('class'=>'blue-grey-text','escape' => false)
 
                     );?>
@@ -164,6 +164,16 @@
                 <?= $this->Html->Link(
                         'My Open Tasks',
                         array('controller'=>'tasks','action' => 'mytasks'),
+                        array('class'=>'blue-grey-text','escape' => false)
+
+                    );?>
+            </div>
+        </li>
+        <li class="collection-item">
+            <div><i class="material-icons">exit_to_app</i>
+                <?= $this->Html->Link(
+                        'Logout',
+                        array('controller'=>'users','action' => 'logout'),
                         array('class'=>'blue-grey-text','escape' => false)
 
                     );?>
