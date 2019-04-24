@@ -51,7 +51,7 @@ class UsersController extends AppController
                 $email = new Email('dev');
                 $email->setViewVars(['verify_code' => $random_hash]);
                 $email->from(['easytaskdev@gmail.com' => 'EasyTasks'])
-                        ->to($user->email)
+                        ->to('david_omu@yahoo.com')
                         ->template('welcome')
                         ->emailFormat('html')
                         ->subject('EasyTasks Verification')

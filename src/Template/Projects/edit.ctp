@@ -16,11 +16,11 @@
          
         <div class="row">
             <div class="col s6 center browser-default">
-                <?= $this->Form->input('status', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
+                <?= $this->Form->input('status', 
+                    array('type' => 'select','class'=>'browser-default','options'=>
                         ['Open' => 'Open', 'In Progress'=>'In Progress','Closed'=>'Closed'],
-                    'empty' => '(choose one)'),
-                );?>
+                    'empty' => '(choose one)'));
+                ?>
             </div>
         </div>
         <div class="row">
@@ -33,7 +33,7 @@
                 <?= $this->Form->input('type', array('type' => 'select', 
                     'class'=>'browser-default','options'=>
                         ['School' => 'School', 'Personal' => 'Personal', 'Work' => 'Work'],
-                    'empty' => '(choose one)'),
+                    'empty' => '(choose one)')
                 );?>
             </div>
         </div>
@@ -89,15 +89,7 @@
                 <?= $this->Form->input('privacy', array('type' => 'select', 
                     'class'=>'browser-default','options'=>
                         ['All' => 'Share to all groups', 'Private'=>'Only Me Can See This Project'],
-                    'empty' => '(choose one)'),
-                );?>
-            </div>
-            <div class="col s6 center browser-default">
-                <?= $this->Form->input('want_sponsors', array('type' => 'select', 
-                    'class'=>'browser-default','options'=>
-                        ['Yes' => 'Yes', 'No' => 'No'],
-                    'empty' => '(choose one)',
-                    'label'=>'Want this Project to be searchable by external sponsors?'),
+                    'empty' => '(choose one)')
                 );?>
             </div>
         </div>
